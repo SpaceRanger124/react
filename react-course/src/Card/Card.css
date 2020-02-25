@@ -1,0 +1,31 @@
+.Card {
+  background-color: white;
+  min-height: 30vh;
+  display: flex;
+  justify-content: left;
+  padding-left: 20px;
+  font-size: calc(5px + 2vmin);
+  font-weight: bold;
+  color: green;
+  border-style: solid;
+  border-width: thick;
+  margin-top: 40px;
+  margin-left: 20px;
+  width: 80vh;
+}
+
+.Card-line {
+  background-color: black;
+  height: 2px;
+  margin-top: 40px;
+  position: absolute;
+  width:180px;
+}
+
+.Card-text {
+  margin-top: 50px;
+  text-align: left;
+  font-weight: normal;
+  position: absolute;
+  font-size: calc(3px + 2vmin);
+}

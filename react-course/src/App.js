@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Card from './Card/Card';
 
 function App() {
   return (
@@ -8,11 +8,7 @@ function App() {
       <header className="App-header">
         Header
       </header>
-	  <body className="App-body">
-		<div>Caption</div>
-		<div className="App-line"></div>
-		<div className="App-text">Text ...</div>
-	  </body>
+	  <Card caption="Mars" description="This is a planet in the Solar System" />
     </div>
   );
 }
