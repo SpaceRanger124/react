@@ -11,9 +11,30 @@
     width: 80vh;
 }
 
+.Card-checked {
+    background-color: pink;
+    padding: 20px;
+    font-size: calc(5px + 2vmin);
+    font-weight: bold;
+    color: blue;
+    font-style: italic;
+    border-style: solid;
+    border-width: thick;
+    margin-top: 40px;
+    margin-left: 20px;
+    width: 80vh;
+}
+
 .Card-text {
     margin-top: 50px;
     text-align: left;
     font-weight: normal;
     font-size: calc(3px + 2vmin);
+}
+
+.Card-checkbox {
+    float: right;
+    outline: 1px solid #D15C43;
+    outline-offset: -1px;
+    transform: scale(2);
 }
