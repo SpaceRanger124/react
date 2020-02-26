@@ -33,8 +33,13 @@
 }
 
 .Card-checkbox {
-    float: right;
-    outline: 1px solid #D15C43;
+    outline: 1px solid #d15c43;
     outline-offset: -1px;
     transform: scale(2);
+}
+
+.Card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
