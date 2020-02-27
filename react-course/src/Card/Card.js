@@ -46,9 +46,7 @@ class Card extends Component {
     cancelChanges = () => {
          this.setState({
             isEditMode: false,
-            isCheckboxChecked: this.checkboxLastState,
-            caption: this.state.caption,
-            description: this.state.description
+            isCheckboxChecked: this.checkboxLastState
          });
     }
 
