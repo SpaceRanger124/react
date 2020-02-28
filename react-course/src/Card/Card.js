@@ -12,7 +12,6 @@ class Card extends Component {
     };
     temporaryCaption = this.state.caption;
     temporaryDescription = this.state.description;
-    checkboxLastState = this.state.isCheckboxChecked;
 
     changeStyles = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
@@ -27,7 +26,6 @@ class Card extends Component {
     }
 
     editCard = () => {
-        this.checkboxLastState = this.state.isCheckboxChecked;
         this.setState({
             isEditMode: true,
             isCheckboxChecked: false
@@ -37,7 +35,6 @@ class Card extends Component {
     saveChanges = () => {
         this.setState({
             isEditMode: false,
-            isCheckboxChecked: this.checkboxLastState,
             caption: this.temporaryCaption,
             description: this.temporaryDescription
         });
@@ -46,20 +43,11 @@ class Card extends Component {
     cancelChanges = () => {
          this.setState({
             isEditMode: false,
-            isCheckboxChecked: this.checkboxLastState
          });
     }
 
     render() {
         let styleClass = this.state.isCheckboxChecked ? 'Card-checked' : 'Card';
-        let editButtonStyle =  {
-            marginRight: '20px',
-            display: this.state.isEditMode ? 'none' : 'inline'
-        };
-        let saveCancelButtonStyle =  {
-            marginRight: '20px',
-            display: this.state.isEditMode ? 'inline' : 'none'
-        };
 
         return (
             <div className={styleClass}>
@@ -70,24 +58,31 @@ class Card extends Component {
                         html={this.state.caption}
                     />
                     <span>
-                        <MdSave
-                            style={saveCancelButtonStyle}
-                            onClick={this.saveChanges}
-                        />
-                        <MdCancel
-                            style={saveCancelButtonStyle}
-                            onClick={this.cancelChanges}
-                        />
-                        <MdEdit
-                            style={editButtonStyle}
-                            onClick={this.editCard}
-                        />
-                        <input
-                            type="checkbox"
-                            className="Card-checkbox"
-                            style={{display: this.state.isEditMode ? 'none' : 'inline'}}
-                            onChange={this.changeStyles}
-                        />
+                        {this.state.isEditMode ? (
+                            <React.Fragment>
+                                <MdSave
+                                    className="Card-icon"
+                                    onClick={this.saveChanges}
+                                />
+                                <MdCancel
+                                    className="Card-icon"
+                                    onClick={this.cancelChanges}
+                                />
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <MdEdit
+                                    className="Card-icon"
+                                    onClick={this.editCard}
+                                />
+                                <input
+                                    className="Card-checkbox"
+                                    type="checkbox"
+                                    checked={this.state.isCheckboxChecked}
+                                    onChange={this.changeStyles}
+                                />
+                            </React.Fragment>
+                        )}
                     </span>
                 </div>
                 <hr />
