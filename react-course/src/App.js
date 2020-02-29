@@ -40,12 +40,13 @@ class App extends Component {
 	render() {
 		const cards = this.state.cards.map((card, index) => {
 			return (
-				<Card caption={card.caption}
-				description={card.description}
-				readOnly={this.state.readOnly}
-				editMode={card.editMode}
-				switchEditMode={() => this.switchEditMode(index)}
-				key={index}
+				<Card
+					caption={card.caption}
+					description={card.description}
+					readOnly={this.state.readOnly}
+					editMode={card.editMode}
+					switchEditMode={() => this.switchEditMode(index)}
+					key={index}
 				/>
 			);
 		});
