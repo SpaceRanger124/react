@@ -4,12 +4,12 @@ import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
 import ContentEditable from 'react-contenteditable'
 
 class Card extends Component {
-    state = {
+	state = {
         isCheckboxChecked: false,
-        isEditMode: false,
         caption: this.props.caption,
         description: this.props.description
     };
+	
     temporaryCaption = this.state.caption;
     temporaryDescription = this.state.description;
 
@@ -26,55 +26,67 @@ class Card extends Component {
     }
 
     editCard = () => {
+		this.props.switchEditMode();
         this.setState({
-            isEditMode: true,
             isCheckboxChecked: false
         });
     }
 
     saveChanges = () => {
+		this.props.switchEditMode();
         this.setState({
-            isEditMode: false,
             caption: this.temporaryCaption,
             description: this.temporaryDescription
         });
     }
 
     cancelChanges = () => {
-         this.setState({
-            isEditMode: false,
-         });
+		this.props.switchEditMode();
     }
 
     render() {
         let styleClass = this.state.isCheckboxChecked ? 'Card-checked' : 'Card';
+		let saveButton = null;
+		let cancelButton = null;
+		let editButton = null;
+		if (!this.props.readOnly) {
+			saveButton = (
+				<MdSave
+                    className="Card-icon"
+                    onClick={this.saveChanges}
+                />
+			);
+			cancelButton = (
+				<MdCancel
+                    className="Card-icon"
+                    onClick={this.cancelChanges}
+                />
+			);
+			editButton = (
+				<MdEdit
+                    className="Card-icon"
+                    onClick={() => this.editCard()}
+                />
+			);
+		}
 
         return (
             <div className={styleClass}>
                 <div className="Card-header">
                     <ContentEditable
-                        disabled={!this.state.isEditMode}
+                        disabled={!this.props.editMode}
                         onChange={this.handleCaptionChange}
                         html={this.state.caption}
                     />
                     <span>
-                        {this.state.isEditMode ? (
+                        {this.props.editMode ? (
                             <React.Fragment>
-                                <MdSave
-                                    className="Card-icon"
-                                    onClick={this.saveChanges}
-                                />
-                                <MdCancel
-                                    className="Card-icon"
-                                    onClick={this.cancelChanges}
-                                />
+								{saveButton}
+								{cancelButton}
                             </React.Fragment>
                         ) : (
                             <React.Fragment>
-                                <MdEdit
-                                    className="Card-icon"
-                                    onClick={this.editCard}
-                                />
+								{editButton}
                                 <input
                                     className="Card-checkbox"
                                     type="checkbox"
@@ -88,7 +100,7 @@ class Card extends Component {
                 <hr />
                 <ContentEditable
                     className="Card-text"
-                    disabled={!this.state.isEditMode}
+                    disabled={!this.props.editMode}
                     onChange={this.handleDescriptionChange}
                     html={this.state.description}
                 />
