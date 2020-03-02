@@ -5,6 +5,7 @@ import ContentEditable from 'react-contenteditable'
 
 class Card extends Component {
 	state = {
+	    editMode: false,
         isCheckboxChecked: false,
         caption: this.props.caption,
         description: this.props.description
@@ -26,22 +27,31 @@ class Card extends Component {
     }
 
     editCard = () => {
-		this.props.switchEditMode();
         this.setState({
+            editMode: true,
             isCheckboxChecked: false
         });
     }
 
     saveChanges = () => {
-		this.props.switchEditMode();
         this.setState({
+            editMode: false,
             caption: this.temporaryCaption,
             description: this.temporaryDescription
         });
     }
 
     cancelChanges = () => {
-		this.props.switchEditMode();
+		this.setState({
+            editMode: false
+        });
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.readOnly) {
+            state.editMode = false;
+        }
+        return state
     }
 
     render() {
@@ -74,12 +84,12 @@ class Card extends Component {
             <div className={styleClass}>
                 <div className="Card-header">
                     <ContentEditable
-                        disabled={!this.props.editMode}
+                        disabled={!this.state.editMode}
                         onChange={this.handleCaptionChange}
                         html={this.state.caption}
                     />
                     <span>
-                        {this.props.editMode ? (
+                        {this.state.editMode ? (
                             <React.Fragment>
 								{saveButton}
 								{cancelButton}
@@ -100,7 +110,7 @@ class Card extends Component {
                 <hr />
                 <ContentEditable
                     className="Card-text"
-                    disabled={!this.props.editMode}
+                    disabled={!this.state.editMode}
                     onChange={this.handleDescriptionChange}
                     html={this.state.description}
                 />

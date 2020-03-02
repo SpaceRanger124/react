@@ -32,3 +32,8 @@
 	font-weight: bold;
 	margin-left: 20px;
 }
+
+.App-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
