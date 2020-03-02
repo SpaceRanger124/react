@@ -8,7 +8,7 @@
     border-width: thick;
     margin-top: 40px;
     margin-left: 20px;
-    width: 80vh;
+    flex: 0 0 40%;
 }
 
 .Card-checked {
@@ -22,7 +22,7 @@
     border-width: thick;
     margin-top: 40px;
     margin-left: 20px;
-    width: 80vh;
+    flex: 0 0 40%;
 }
 
 .Card-text {
