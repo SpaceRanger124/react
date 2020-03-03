@@ -51,10 +51,16 @@ class App extends Component {
 				</header>
 				<StyledInput
                     type="checkbox"
+                    id="readOnlyCheckbox"
 					checked={this.state.readOnly}
 					onChange={this.switchReadOnly}
                 />
-				<span className="App-checkbox-label">Read only</span>
+				<label
+				    for="readOnlyCheckbox"
+				    className="App-checkbox-label"
+				>
+				    Read only
+				</label>
 				<div className="App-cards">
 				    {cards}
 				</div>
