@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
 import './App.css';
 import Card from './Card/Card';
 
@@ -35,18 +37,30 @@ class App extends Component {
 				/>
 			);
 		});
+		const StyledInput = styled.input`
+            outline: 1px dashed purple;
+            outline-offset: -1px;
+            transform: scale(2);
+            margin-top: 40px;
+            margin-left: 30px;
+        `;
 		return (
 			<div className="App">
 				<header className="App-header">
 					The Solar System
 				</header>
-				<input
-					className="App-checkbox"
+				<StyledInput
                     type="checkbox"
+                    id="readOnlyCheckbox"
 					checked={this.state.readOnly}
 					onChange={this.switchReadOnly}
                 />
-				<span className="App-checkbox-label">Read only</span>
+				<label
+				    for="readOnlyCheckbox"
+				    className="App-checkbox-label"
+				>
+				    Read only
+				</label>
 				<div className="App-cards">
 				    {cards}
 				</div>

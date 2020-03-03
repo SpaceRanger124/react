@@ -1,39 +1,36 @@
 .App {
-  color: black;
-  border-style: solid;
-  border-width: thick;
-  min-height: 99vh;
+    color: black;
+    border-style: solid;
+    border-width: thick;
+    min-height: 99vh;
 }
 
 .App-header {
-  background-color: white;
-  min-height: 7vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  font-weight: bold;
-  color: blue;
-  border-style: solid;
-  border-width: thick;
-}
-
-.App-checkbox {
-    outline: 1px solid #d15c43;
-    outline-offset: -1px;
-    transform: scale(2);
-	margin-top: 40px;
-	margin-left: 30px;
+    padding: 20px 0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    font-weight: bold;
+    color: blue;
+    border-style: solid;
+    border-width: thick;
 }
 
 .App-checkbox-label {
     color: green;
-	font-size: calc(7px + 2vmin);
-	font-weight: bold;
-	margin-left: 20px;
+    font-size: calc(7px + 2vmin);
+    font-weight: bold;
+    margin-left: 20px;
 }
 
 .App-cards {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.App-cards .Card {
+    margin-top: 30px;
 }
