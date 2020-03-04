@@ -26,9 +26,8 @@ class App extends Component {
 		});
 	}
 
-	selectCard = (caption) => {
+	selectCardHandler = (caption) => {
 	    var cards = this.state.cards.slice();
-	    console.log(caption);
 	    var selectedCard = cards.find(card => card.caption === caption);
 	    selectedCard.isSelected = !selectedCard.isSelected;
 	    this.setState({
@@ -77,7 +76,7 @@ class App extends Component {
 				    <CardList
 				        readOnly={this.state.readOnly}
 				        cards={this.state.cards}
-				        selectCardHandler={this.selectCard }
+				        selectCardHandler={this.selectCardHandler }
 				    />
 				</div>
 			</div>
