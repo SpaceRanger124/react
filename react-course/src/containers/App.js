@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import classes from './App.css';
+import classes from './App.module.css';
 import CardList from '../components/CardList/CardList'
 
 class App extends Component {
@@ -53,7 +53,7 @@ class App extends Component {
         `;
 		return (
 			<div className={classes.App}>
-				<header className={classes['AppHeader']}>
+				<header className={classes['App-header']}>
 					The Solar System
 				</header>
 				<StyledInput
@@ -63,17 +63,17 @@ class App extends Component {
 					onChange={this.switchReadOnly}
                 />
 				<label
-				    className="App-checkbox-label"
+				    className={classes['App-checkbox-label']}
 				    htmlFor="readOnlyCheckbox"
 				>
 				    Read only
 				</label>
-				<div className="App-button-block">
+				<div className={classes['App-button-block']}>
 				    <button onClick={this.removeSelectedCards}>
 				        Remove selected cards
 				    </button>
 				</div>
-				<div className="App-cards">
+				<div className={classes['App-cards']}>
 				    <CardList
 				        readOnly={this.state.readOnly}
 				        cards={this.state.cards}

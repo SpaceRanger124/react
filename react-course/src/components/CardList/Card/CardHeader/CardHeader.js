@@ -1,11 +1,11 @@
 import React from 'react';
 import ContentEditable from 'react-contenteditable';
 
-import './CardHeader.css';
+import classes from './CardHeader.module.css';
 
 const cardHeader = (props) => {
     return (
-        <div className="Card-header">
+        <div className={classes['Card-header']}>
             <ContentEditable
                 disabled={props.disabled}
                 onChange={props.onChange}
@@ -21,7 +21,7 @@ const cardHeader = (props) => {
                     <React.Fragment>
         			    {props.editButton}
                         <input
-                            className="Card-checkbox"
+                            className={classes['Card-checkbox']}
                             type="checkbox"
                             checked={props.checked}
                             onChange={props.changeStyles}

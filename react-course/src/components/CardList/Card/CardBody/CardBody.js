@@ -1,14 +1,14 @@
 import React from 'react';
 import ContentEditable from 'react-contenteditable';
 
-import './CardBody.css'
+import classes from './CardBody.module.css'
 
 const cardBody = (props) => {
     return (
         <div>
             <hr />
             <ContentEditable
-                className="Card-text"
+                className={classes['Card-text']}
                 disabled={props.disabled}
                 onChange={props.onChange}
                 html={props.content}

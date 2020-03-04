@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
 
-import './Card.css';
+import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
 import CardHeader from './CardHeader/CardHeader';
 
@@ -45,6 +45,8 @@ class Card extends Component {
     }
 
     cancelChanges = () => {
+        this.temporaryCaption = this.state.caption;
+        this.temporaryDescription = this.state.description;
 		this.setState({
             editMode: false
         });
@@ -58,26 +60,26 @@ class Card extends Component {
     }
 
     render() {
-        let styleClass = this.state.isCheckboxChecked ? 'Card-checked' : 'Card';
+        let styleClass = this.state.isCheckboxChecked ? classes['Card-checked'] : classes['Card'];
 		let saveButton = null;
 		let cancelButton = null;
 		let editButton = null;
 		if (!this.props.readOnly) {
 			saveButton = (
 				<MdSave
-                    className="Card-icon"
+                    className={classes['Card-icon']}
                     onClick={this.saveChanges}
                 />
 			);
 			cancelButton = (
 				<MdCancel
-                    className="Card-icon"
+                    className={classes['Card-icon']}
                     onClick={this.cancelChanges}
                 />
 			);
 			editButton = (
 				<MdEdit
-                    className="Card-icon"
+                    className={classes['Card-icon']}
                     onClick={() => this.editCard()}
                 />
 			);
