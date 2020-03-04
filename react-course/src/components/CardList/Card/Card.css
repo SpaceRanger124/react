@@ -23,25 +23,6 @@
     flex: 0 0 40%;
 }
 
-.Card-text {
-    margin-top: 50px;
-    text-align: left;
-    font-weight: normal;
-    font-size: calc(3px + 2vmin);
-}
-
-.Card-checkbox {
-    outline: 1px solid #d15c43;
-    outline-offset: -1px;
-    transform: scale(2);
-}
-
-.Card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .Card-icon {
     margin-right: 20px;
 }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import './Card.css';
 import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
-import ContentEditable from 'react-contenteditable'
+
+import './Card.css';
+import CardBody from './CardBody/CardBody';
+import CardHeader from './CardHeader/CardHeader';
 
 class Card extends Component {
 	state = {
@@ -16,6 +18,7 @@ class Card extends Component {
 
     changeStyles = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
+        this.props.selectHandler(this.state.caption);
     };
 
     handleCaptionChange = (event) => {
@@ -82,37 +85,20 @@ class Card extends Component {
 
         return (
             <div className={styleClass}>
-                <div className="Card-header">
-                    <ContentEditable
-                        disabled={!this.state.editMode}
-                        onChange={this.handleCaptionChange}
-                        html={this.state.caption}
-                    />
-                    <span>
-                        {this.state.editMode ? (
-                            <React.Fragment>
-								{saveButton}
-								{cancelButton}
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-								{editButton}
-                                <input
-                                    className="Card-checkbox"
-                                    type="checkbox"
-                                    checked={this.state.isCheckboxChecked}
-                                    onChange={this.changeStyles}
-                                />
-                            </React.Fragment>
-                        )}
-                    </span>
-                </div>
-                <hr />
-                <ContentEditable
-                    className="Card-text"
+                <CardHeader
+                    disabled={!this.state.editMode}
+                    onChange={this.handleCaptionChange}
+                    content={this.state.caption}
+                    saveButton={saveButton}
+                    cancelButton={cancelButton}
+                    editButton={editButton}
+                    changeStyles={this.changeStyles}
+                    checked={this.state.isCheckboxChecked}
+                />
+                <CardBody
                     disabled={!this.state.editMode}
                     onChange={this.handleDescriptionChange}
-                    html={this.state.description}
+                    content={this.state.description}
                 />
             </div>
         );

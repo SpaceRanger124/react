@@ -34,3 +34,9 @@
 .App-cards .Card {
     margin-top: 30px;
 }
+
+.App-button-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
