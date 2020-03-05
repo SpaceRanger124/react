@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
 
 import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
@@ -16,7 +15,7 @@ class Card extends Component {
     temporaryCaption = this.state.caption;
     temporaryDescription = this.state.description;
 
-    changeStyles = () => {
+    onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
         this.props.selectHandler(this.state.caption);
     };
@@ -37,6 +36,11 @@ class Card extends Component {
     }
 
     saveChanges = () => {
+        this.props.updateCardHandler(
+            this.state.caption,
+            this.temporaryCaption,
+            this.temporaryDescription
+        );
         this.setState({
             editMode: false,
             caption: this.temporaryCaption,
@@ -61,41 +65,19 @@ class Card extends Component {
 
     render() {
         let styleClass = this.state.isCheckboxChecked ? classes['Card-checked'] : classes['Card'];
-		let saveButton = null;
-		let cancelButton = null;
-		let editButton = null;
-		if (!this.props.readOnly) {
-			saveButton = (
-				<MdSave
-                    className={classes['Card-icon']}
-                    onClick={this.saveChanges}
-                />
-			);
-			cancelButton = (
-				<MdCancel
-                    className={classes['Card-icon']}
-                    onClick={this.cancelChanges}
-                />
-			);
-			editButton = (
-				<MdEdit
-                    className={classes['Card-icon']}
-                    onClick={() => this.editCard()}
-                />
-			);
-		}
 
         return (
-            <div className={styleClass}>
+            <div className={[styleClass, this.props.className].join(' ')}>
                 <CardHeader
                     disabled={!this.state.editMode}
                     onChange={this.handleCaptionChange}
                     content={this.state.caption}
-                    saveButton={saveButton}
-                    cancelButton={cancelButton}
-                    editButton={editButton}
-                    changeStyles={this.changeStyles}
-                    checked={this.state.isCheckboxChecked}
+                    readOnly={this.props.readOnly}
+                    handleSaveClick={this.saveChanges}
+                    handleCancelClick={this.cancelChanges}
+                    handleEditClick={this.editCard}
+                    onChecked={this.onChecked}
+                    isChecked={this.state.isCheckboxChecked}
                 />
                 <CardBody
                     disabled={!this.state.editMode}

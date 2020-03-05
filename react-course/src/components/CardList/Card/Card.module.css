@@ -6,7 +6,6 @@
     color: green;
     border-style: solid;
     border-width: thick;
-    margin-top: 30px;
     flex: 0 0 40%;
 }
 
@@ -19,10 +18,5 @@
     font-style: italic;
     border-style: solid;
     border-width: thick;
-    margin-top: 30px;
     flex: 0 0 40%;
-}
-
-.Card-icon {
-    margin-right: 20px;
 }

@@ -2,9 +2,11 @@ import React from 'react';
 
 import Card from './Card/Card';
 
-const cardList = (props) => props.cards.map((card, index) => {
+const CardList = (props) => props.cards.map((card, index) => {
     return <Card
+        className="mt-1"
         selectHandler={props.selectCardHandler}
+        updateCardHandler={props.updateCardHandler}
         caption={card.caption}
         description={card.description}
         readOnly={props.readOnly}
@@ -12,4 +14,4 @@ const cardList = (props) => props.cards.map((card, index) => {
     />
 });
 
-export default cardList;
+export default CardList;

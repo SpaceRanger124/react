@@ -27,10 +27,20 @@ class App extends Component {
 	}
 
 	selectCardHandler = (caption) => {
-	    var cards = this.state.cards.slice();
-	    var selectedCard = cards.find(card => card.caption === caption);
+	    const cards = this.state.cards.slice();
+	    const selectedCard = cards.find(card => card.caption === caption);
 	    selectedCard.isSelected = !selectedCard.isSelected;
 	    this.setState({
+            cards: cards
+        });
+	}
+
+	updateCardHandler = (caption, newCaption, newDescription) => {
+	    const cards = this.state.cards.slice();
+	    const selectedCard = cards.find(card => card.caption === caption);
+        selectedCard.caption = newCaption;
+	    selectedCard.description = newDescription;
+        this.setState({
             cards: cards
         });
 	}
@@ -77,6 +87,7 @@ class App extends Component {
 				        readOnly={this.state.readOnly}
 				        cards={this.state.cards}
 				        selectCardHandler={this.selectCardHandler }
+				        updateCardHandler={this.updateCardHandler}
 				    />
 				</div>
 			</div>

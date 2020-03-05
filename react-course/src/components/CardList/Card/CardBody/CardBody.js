@@ -3,7 +3,7 @@ import ContentEditable from 'react-contenteditable';
 
 import classes from './CardBody.module.css'
 
-const cardBody = (props) => {
+const CardBody = (props) => {
     return (
         <div>
             <hr />
@@ -17,4 +17,4 @@ const cardBody = (props) => {
     );
 };
 
-export default cardBody;
+export default CardBody;
