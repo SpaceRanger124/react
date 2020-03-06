@@ -5,8 +5,8 @@ import classes from './AddCardPanel.module.css';
 
 class AddCardPanel extends Component {
 
-    caption;
-    description;
+    caption = "";
+    description = "";
 
     handleCaptionChange = (event) => {
         this.caption = event.target.value;
@@ -25,21 +25,19 @@ class AddCardPanel extends Component {
             <div className={classes['AddCardPanel']}>
                 <div className={classes['AddCardPanel-left']}>
                     <div>
-                        <label>Caption</label>
+                        <label>Caption:</label>
                     </div>
                     <div>
-                        <label>Description</label>
+                        <label>Description:</label>
                     </div>
                     <div>
                         <button onClick={this.submit}>Submit</button>
                     </div>
                 </div>
-                <div className={classes['AddCardPanel-right']}>
-                    <ContentEditable onChange={this.handleCaptionChange} />
-                    <ContentEditable onChange={this.handleDescriptionChange} />
-                    <div>
-                        <button onClick={this.props.cancel}>Cancel</button>
-                    </div>
+                <div>
+                    <ContentEditable onChange={this.handleCaptionChange} html="" className={classes['AddCardPanel-ContentEditable']} />
+                    <ContentEditable onChange={this.handleDescriptionChange} html="" className={classes['AddCardPanel-ContentEditable']} />
+                    <button onClick={this.props.cancel}>Cancel</button>
                 </div>
             </div>
         );

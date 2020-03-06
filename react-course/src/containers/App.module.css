@@ -40,3 +40,7 @@
 .App-button-block * {
     margin-left: 20px;
 }
+
+.App div {
+    margin-top: 10px;
+}

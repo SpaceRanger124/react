@@ -21,6 +21,8 @@ class App extends Component {
 		readOnly: false,
 		isAddCardPanelVisible: false
 	};
+
+	cardIdCounter = this.state.cards.length;
 	
 	switchReadOnly = () => {
 		this.setState({
@@ -68,9 +70,10 @@ class App extends Component {
 
 	submitNewCard = (caption, description) => {
 	    const cards = this.state.cards.slice();
-	    cards.push({caption: caption, description: description});
+	    cards.push({id: ++this.cardIdCounter, caption: caption, description: description});
 	    this.setState({
-	        cards: cards
+	        cards: cards,
+	        isAddCardPanelVisible: false
 	    });
 	}
 
@@ -91,10 +94,12 @@ class App extends Component {
         let addCardPanel = null;
         if (this.state.isAddCardPanelVisible) {
             addCardPanel = (
-                <AddCardPanel
-                    submit={this.submitNewCard}
-                    cancel={this.cancelNewCard}
-                />
+                <div>
+                    <AddCardPanel
+                        submit={this.submitNewCard}
+                        cancel={this.cancelNewCard}
+                    />
+                </div>
             );
         }
 		return (
@@ -127,7 +132,7 @@ class App extends Component {
 				    <CardList
 				        readOnly={this.state.readOnly}
 				        cards={this.state.cards}
-				        selectCardHandler={this.selectCardHandler }
+				        selectCardHandler={this.selectCardHandler}
 				        updateCardHandler={this.updateCardHandler}
 				    />
 				</div>

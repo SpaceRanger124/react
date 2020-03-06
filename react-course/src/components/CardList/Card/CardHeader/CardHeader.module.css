@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+.Card-header div {
+    flex: 2;
+}
+
 .Card-icon {
     margin-right: 20px;
 }

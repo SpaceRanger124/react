@@ -3,9 +3,24 @@
     justify-content: space-between;
     align-items: center;
     justify-content: center;
+    color: darkgreen;
+    border-style: solid;
+    border-width: thick;
+    margin: auto;
+    width: 50%;
+}
+
+.AddCardPanel * {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .AddCardPanel-left {
     text-align: right;
     margin-right: 20px;
+}
+
+.AddCardPanel-ContentEditable {
+    background: lightgrey;
+    min-width: 200px;
 }
