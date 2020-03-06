@@ -35,8 +35,16 @@ class AddCardPanel extends Component {
                     </div>
                 </div>
                 <div>
-                    <ContentEditable onChange={this.handleCaptionChange} html="" className={classes['AddCardPanel-ContentEditable']} />
-                    <ContentEditable onChange={this.handleDescriptionChange} html="" className={classes['AddCardPanel-ContentEditable']} />
+                    <ContentEditable
+                        onChange={this.handleCaptionChange}
+                        html=""
+                        className={classes['AddCardPanel-ContentEditable']}
+                    />
+                    <ContentEditable
+                        onChange={this.handleDescriptionChange}
+                        html=""
+                        className={classes['AddCardPanel-ContentEditable']}
+                    />
                     <button onClick={this.props.cancel}>Cancel</button>
                 </div>
             </div>
