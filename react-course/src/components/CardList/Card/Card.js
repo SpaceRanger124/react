@@ -7,17 +7,15 @@ import CardHeader from './CardHeader/CardHeader';
 class Card extends Component {
 	state = {
 	    editMode: false,
-        isCheckboxChecked: false,
-        caption: this.props.caption,
-        description: this.props.description
+        isCheckboxChecked: false
     };
 	
-    temporaryCaption = this.state.caption;
-    temporaryDescription = this.state.description;
+    temporaryCaption = this.props.caption;
+    temporaryDescription = this.props.description;
 
     onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
-        this.props.selectHandler(this.state.caption);
+        this.props.selectHandler(this.props.caption);
     };
 
     handleCaptionChange = (event) => {
@@ -37,20 +35,17 @@ class Card extends Component {
 
     saveChanges = () => {
         this.props.updateCardHandler(
-            this.state.caption,
             this.temporaryCaption,
             this.temporaryDescription
         );
         this.setState({
-            editMode: false,
-            caption: this.temporaryCaption,
-            description: this.temporaryDescription
+            editMode: false
         });
     }
 
     cancelChanges = () => {
-        this.temporaryCaption = this.state.caption;
-        this.temporaryDescription = this.state.description;
+        this.temporaryCaption = this.props.caption;
+        this.temporaryDescription = this.props.description;
 		this.setState({
             editMode: false
         });
@@ -71,7 +66,7 @@ class Card extends Component {
                 <CardHeader
                     disabled={!this.state.editMode}
                     onChange={this.handleCaptionChange}
-                    content={this.state.caption}
+                    content={this.props.caption}
                     readOnly={this.props.readOnly}
                     handleSaveClick={this.saveChanges}
                     handleCancelClick={this.cancelChanges}
@@ -82,7 +77,7 @@ class Card extends Component {
                 <CardBody
                     disabled={!this.state.editMode}
                     onChange={this.handleDescriptionChange}
-                    content={this.state.description}
+                    content={this.props.description}
                 />
             </div>
         );

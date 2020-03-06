@@ -8,14 +8,14 @@ class App extends Component {
 	
 	state = {
 		cards: [
-			{caption: "Mercury", description: "This is the first planet from the Sun.", isSelected: false },
-			{caption: "Venus", description: "This is the second planet from the Sun.", isSelected: false },
-			{caption: "Earth", description: "This is the third planet from the Sun.", isSelected: false },
-			{caption: "Mars", description: "This is the fourth planet from the Sun.", isSelected: false },
-			{caption: "Jupiter", description: "This is the fifth planet from the Sun.", isSelected: false },
-			{caption: "Saturn", description: "This is the sixth planet from the Sun.", isSelected: false },
-			{caption: "Uranus", description: "This is the seventh planet from the Sun.", isSelected: false },
-			{caption: "Neptune", description: "This is the eighth planet from the Sun.", isSelected: false }
+			{id: 1, caption: "Mercury", description: "This is the first planet from the Sun.", isSelected: false },
+			{id: 2, caption: "Venus", description: "This is the second planet from the Sun.", isSelected: false },
+			{id: 3, caption: "Earth", description: "This is the third planet from the Sun.", isSelected: false },
+			{id: 4, caption: "Mars", description: "This is the fourth planet from the Sun.", isSelected: false },
+			{id: 5, caption: "Jupiter", description: "This is the fifth planet from the Sun.", isSelected: false },
+			{id: 6, caption: "Saturn", description: "This is the sixth planet from the Sun.", isSelected: false },
+			{id: 7, caption: "Uranus", description: "This is the seventh planet from the Sun.", isSelected: false },
+			{id: 8, caption: "Neptune", description: "This is the eighth planet from the Sun.", isSelected: false }
 		],
 		readOnly: false
 	};
@@ -35,14 +35,20 @@ class App extends Component {
         });
 	}
 
-	updateCardHandler = (caption, newCaption, newDescription) => {
-	    const cards = this.state.cards.slice();
-	    const selectedCard = cards.find(card => card.caption === caption);
-        selectedCard.caption = newCaption;
-	    selectedCard.description = newDescription;
-        this.setState({
-            cards: cards
-        });
+	updateCardHandler = cardId => (newCaption, newDescription) => {
+	    this.setState({
+	        cards: this.state.cards.map(_card => {
+	            if (_card.id !== cardId) {
+	                return _card;
+	            } else {
+	                return {
+	                    ..._card,
+	                    caption: newCaption,
+	                    description: newDescription
+	                };
+	            }
+	        })
+	    });
 	}
 
 	removeSelectedCards = () => {
