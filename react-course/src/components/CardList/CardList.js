@@ -7,12 +7,12 @@ const CardList = props =>
         return (
             <Card
                 className="mt-1"
-                selectHandler={props.selectCardHandler}
+                selectHandler={props.selectCardHandler(card.id)}
                 updateCardHandler={props.updateCardHandler(card.id)}
                 caption={card.caption}
                 description={card.description}
                 readOnly={props.readOnly}
-                key={card.caption}
+                key={card.id}
             />
         );
     });

@@ -15,7 +15,7 @@ class Card extends Component {
 
     onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
-        this.props.selectHandler(this.props.caption);
+        this.props.selectHandler();
     };
 
     handleCaptionChange = (event) => {

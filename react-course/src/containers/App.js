@@ -26,9 +26,9 @@ class App extends Component {
 		});
 	}
 
-	selectCardHandler = (caption) => {
+	selectCardHandler = cardId => () => {
 	    const cards = this.state.cards.slice();
-	    const selectedCard = cards.find(card => card.caption === caption);
+	    const selectedCard = cards.find(card => card.id === cardId);
 	    selectedCard.isSelected = !selectedCard.isSelected;
 	    this.setState({
             cards: cards
