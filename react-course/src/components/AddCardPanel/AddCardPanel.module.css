@@ -1,0 +1,11 @@
+.AddCardPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+}
+
+.AddCardPanel-left {
+    text-align: right;
+    margin-right: 20px;
+}

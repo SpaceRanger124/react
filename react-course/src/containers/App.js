@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import classes from './App.module.css';
-import CardList from '../components/CardList/CardList'
+import CardList from '../components/CardList/CardList';
+import AddCardPanel from '../components/AddCardPanel/AddCardPanel';
 
 class App extends Component {
 	
@@ -17,7 +18,8 @@ class App extends Component {
 			{caption: "Uranus", description: "This is the seventh planet from the Sun.", isSelected: false },
 			{caption: "Neptune", description: "This is the eighth planet from the Sun.", isSelected: false }
 		],
-		readOnly: false
+		readOnly: false,
+		isAddCardPanelVisible: false
 	};
 	
 	switchReadOnly = () => {
@@ -52,6 +54,26 @@ class App extends Component {
         });
 	}
 
+	addNewCard = () => {
+	    this.setState({
+	        isAddCardPanelVisible: true
+	    });
+	}
+
+	submitNewCard = (caption, description) => {
+	    const cards = this.state.cards.slice();
+	    cards.push({caption: caption, description: description});
+	    this.setState({
+	        cards: cards
+	    });
+	}
+
+	cancelNewCard = () => {
+	    this.setState({
+            isAddCardPanelVisible: false
+        });
+    }
+
 	render() {
 		const StyledInput = styled.input`
             outline: 1px dashed purple;
@@ -60,6 +82,15 @@ class App extends Component {
             margin-top: 40px;
             margin-left: 30px;
         `;
+        let addCardPanel = null;
+        if (this.state.isAddCardPanelVisible) {
+            addCardPanel = (
+                <AddCardPanel
+                    submit={this.submitNewCard}
+                    cancel={this.cancelNewCard}
+                />
+            );
+        }
 		return (
 			<div className={classes.App}>
 				<header className={classes['App-header']}>
@@ -81,7 +112,11 @@ class App extends Component {
 				    <button onClick={this.removeSelectedCards}>
 				        Remove selected cards
 				    </button>
+				    <button onClick={this.addNewCard}>
+				        Add a new card
+				    </button>
 				</div>
+				{addCardPanel}
 				<div className={classes['App-cards']}>
 				    <CardList
 				        readOnly={this.state.readOnly}
