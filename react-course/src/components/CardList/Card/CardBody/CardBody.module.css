@@ -1,0 +1,6 @@
+.Card-text {
+    margin-top: 50px;
+    text-align: left;
+    font-weight: normal;
+    font-size: calc(3px + 2vmin);
+}
