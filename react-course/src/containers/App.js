@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { v1 as uuidv1 } from 'uuid';
 
 import classes from './App.module.css';
 import CardList from '../components/CardList/CardList';
@@ -9,20 +10,18 @@ class App extends Component {
 	
 	state = {
 		cards: [
-			{id: 1, caption: "Mercury", description: "This is the first planet from the Sun.", isSelected: false },
-			{id: 2, caption: "Venus", description: "This is the second planet from the Sun.", isSelected: false },
-			{id: 3, caption: "Earth", description: "This is the third planet from the Sun.", isSelected: false },
-			{id: 4, caption: "Mars", description: "This is the fourth planet from the Sun.", isSelected: false },
-			{id: 5, caption: "Jupiter", description: "This is the fifth planet from the Sun.", isSelected: false },
-			{id: 6, caption: "Saturn", description: "This is the sixth planet from the Sun.", isSelected: false },
-			{id: 7, caption: "Uranus", description: "This is the seventh planet from the Sun.", isSelected: false },
-			{id: 8, caption: "Neptune", description: "This is the eighth planet from the Sun.", isSelected: false }
+			{id: uuidv1(), caption: "Mercury", description: "This is the first planet from the Sun.", isSelected: false },
+			{id: uuidv1(), caption: "Venus", description: "This is the second planet from the Sun.", isSelected: false },
+			{id: uuidv1(), caption: "Earth", description: "This is the third planet from the Sun.", isSelected: false },
+			{id: uuidv1(), caption: "Mars", description: "This is the fourth planet from the Sun.", isSelected: false },
+			{id: uuidv1(), caption: "Jupiter", description: "This is the fifth planet from the Sun.", isSelected: false },
+			{id: uuidv1(), caption: "Saturn", description: "This is the sixth planet from the Sun.", isSelected: false },
+			{id: uuidv1(), caption: "Uranus", description: "This is the seventh planet from the Sun.", isSelected: false },
+			{id: uuidv1(), caption: "Neptune", description: "This is the eighth planet from the Sun.", isSelected: false }
 		],
 		readOnly: false,
 		isAddCardPanelVisible: false
 	};
-
-	cardIdCounter = this.state.cards.length;
 	
 	switchReadOnly = () => {
 		this.setState({
@@ -31,11 +30,13 @@ class App extends Component {
 	}
 
 	selectCardHandler = cardId => () => {
-	    const cards = this.state.cards.slice();
-	    const selectedCard = cards.find(card => card.id === cardId);
-	    selectedCard.isSelected = !selectedCard.isSelected;
 	    this.setState({
-            cards: cards
+            cards: this.state.cards.map(card => {
+                if (card.id === cardId) {
+                    card.isSelected = !card.isSelected;
+                }
+                return card;
+            })
         });
 	}
 
@@ -56,9 +57,8 @@ class App extends Component {
 	}
 
 	removeSelectedCards = () => {
-        var cards = this.state.cards.slice();
         this.setState({
-            cards: cards.filter(card => !card.isSelected)
+            cards: this.state.cards.filter(card => !card.isSelected)
         });
 	}
 
@@ -69,10 +69,8 @@ class App extends Component {
 	}
 
 	submitNewCard = (caption, description) => {
-	    const cards = this.state.cards.slice();
-	    cards.push({id: ++this.cardIdCounter, caption: caption, description: description});
 	    this.setState({
-	        cards: cards,
+	        cards: [...this.state.cards, {id: uuidv1(), caption: caption, description: description}],
 	        isAddCardPanelVisible: false
 	    });
 	}
@@ -94,12 +92,10 @@ class App extends Component {
         let addCardPanel = null;
         if (this.state.isAddCardPanelVisible) {
             addCardPanel = (
-                <div>
-                    <AddCardPanel
-                        submit={this.submitNewCard}
-                        cancel={this.cancelNewCard}
-                    />
-                </div>
+                <AddCardPanel
+                    submit={this.submitNewCard}
+                    cancel={this.cancelNewCard}
+                />
             );
         }
 		return (
