@@ -29,10 +29,19 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .App-button-block {
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.App-button-block * {
+    margin-left: 20px;
+}
+
+.App div {
+    margin-top: 10px;
 }
