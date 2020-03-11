@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
 import CardHeader from './CardHeader/CardHeader';
-import WithLoadingDelay from '../../../hoc/WithLoadingDelay';
+import withLoadingDelay from '../../../hoc/WithLoadingDelay';
 
 class Card extends Component {
 	state = {
@@ -63,7 +63,7 @@ class Card extends Component {
         let styleClass = this.state.isCheckboxChecked ? classes['Card-checked'] : classes['Card'];
 
         return (
-            <WithLoadingDelay classes={[styleClass, this.props.className].join(' ')}>
+            <div className={[styleClass, this.props.className].join(' ')}>
                 <CardHeader
                     disabled={!this.state.editMode}
                     onChange={this.handleCaptionChange}
@@ -80,9 +80,9 @@ class Card extends Component {
                     onChange={this.handleDescriptionChange}
                     content={this.props.description}
                 />
-            </WithLoadingDelay>
+            </div>
         );
     }
 }
 
-export default Card;
+export default withLoadingDelay(Card);

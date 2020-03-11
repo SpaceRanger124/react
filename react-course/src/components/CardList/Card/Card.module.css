@@ -6,7 +6,6 @@
     color: green;
     border-style: solid;
     border-width: thick;
-    flex: 0 0 40%;
 }
 
 .Card-checked {
@@ -18,5 +17,4 @@
     font-style: italic;
     border-style: solid;
     border-width: thick;
-    flex: 0 0 40%;
 }
