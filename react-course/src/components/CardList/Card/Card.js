@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
 import CardHeader from './CardHeader/CardHeader';
 import withLoadingDelay from '../../../hoc/WithLoadingDelay';
+import CardsContext from '../../../context/cards-context';
 
 class Card extends Component {
 	state = {
 	    editMode: false,
         isCheckboxChecked: false
     };
+
+    static contextType = CardsContext;
 	
     temporaryCaption = this.props.caption;
     temporaryDescription = this.props.description;
 
     onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
-        this.props.selectHandler();
+        this.context.selectCardHandler(this.props.id)();
     };
 
     handleCaptionChange = (event) => {
@@ -35,7 +39,7 @@ class Card extends Component {
     }
 
     saveChanges = () => {
-        this.props.updateCardHandler(
+        this.context.updateCardHandler(this.props.id)(
             this.temporaryCaption,
             this.temporaryDescription
         );
@@ -84,5 +88,13 @@ class Card extends Component {
         );
     }
 }
+
+Card.propTypes = {
+    className: PropTypes.string,
+    caption: PropTypes.string,
+    description: PropTypes.string,
+    readOnly: PropTypes.bool,
+    id: PropTypes.string
+};
 
 export default withLoadingDelay(Card);

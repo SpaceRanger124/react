@@ -18,6 +18,16 @@
     border-width: thick;
 }
 
+.App-header div {
+    position: absolute;
+    display: inline-block;
+    margin-left: 40%;
+    border-radius: 20px;
+    background: lightblue;
+    color: grey;
+    text-align: center;
+}
+
 .App-checkbox-label {
     color: green;
     font-size: calc(7px + 2vmin);

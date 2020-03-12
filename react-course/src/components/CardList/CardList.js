@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Card from './Card/Card';
+import CardsContext from '../../context/cards-context';
 
-const CardList = props =>
-    props.cards.map((card, index) => {
+const CardList = props => {
+    const cardsContext = useContext(CardsContext);
+    return cardsContext.cards.map((card, index) => {
         return (
             <Card
                 className="mt-1"
-                selectHandler={props.selectCardHandler(card.id)}
-                updateCardHandler={props.updateCardHandler(card.id)}
                 caption={card.caption}
                 description={card.description}
                 readOnly={props.readOnly}
+                id={card.id}
                 key={card.id}
             />
         );
     });
-
+}
 export default CardList;

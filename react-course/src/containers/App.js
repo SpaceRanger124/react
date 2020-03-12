@@ -5,6 +5,7 @@ import { v1 as uuidv1 } from 'uuid';
 import classes from './App.module.css';
 import CardList from '../components/CardList/CardList';
 import AddCardPanel from '../components/AddCardPanel/AddCardPanel';
+import CardsContext from '../context/cards-context';
 
 class App extends Component {
 	
@@ -22,6 +23,8 @@ class App extends Component {
 		readOnly: false,
 		isAddCardPanelVisible: false
 	};
+
+	static contextType = CardsContext;
 	
 	switchReadOnly = () => {
 		this.setState({
@@ -82,6 +85,10 @@ class App extends Component {
     }
 
 	render() {
+	    this.context.cards = this.state.cards;
+	    this.context.selectCardHandler = this.selectCardHandler;
+	    this.context.updateCardHandler = this.updateCardHandler;
+
 		const StyledInput = styled.input`
             outline: 1px dashed purple;
             outline-offset: -1px;
@@ -102,6 +109,7 @@ class App extends Component {
 			<div className={classes.App}>
 				<header className={classes['App-header']}>
 					The Solar System
+					<div>{"\u00a0" + this.context.cards.length + "\u00a0"}</div>
 				</header>
 				<StyledInput
                     type="checkbox"
@@ -127,9 +135,6 @@ class App extends Component {
 				<div className={classes['App-cards']}>
 				    <CardList
 				        readOnly={this.state.readOnly}
-				        cards={this.state.cards}
-				        selectCardHandler={this.selectCardHandler}
-				        updateCardHandler={this.updateCardHandler}
 				    />
 				</div>
 			</div>
