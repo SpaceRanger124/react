@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
 import CardHeader from './CardHeader/CardHeader';
-import withLoadingDelay from '../../../hoc/WithLoadingDelay';
+import withLoadingDelay from '../../../hoc/withLoadingDelay';
 import CardsContext from '../../../context/cards-context';
 
 class Card extends Component {
@@ -14,7 +14,7 @@ class Card extends Component {
     };
 
     static contextType = CardsContext;
-	
+
     temporaryCaption = this.props.caption;
     temporaryDescription = this.props.description;
 

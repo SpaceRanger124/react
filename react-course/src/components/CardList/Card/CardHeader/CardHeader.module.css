@@ -12,6 +12,8 @@
 
 .Card-header div {
     flex: 2;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .Card-icon {

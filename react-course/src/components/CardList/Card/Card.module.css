@@ -6,6 +6,13 @@
     color: green;
     border-style: solid;
     border-width: thick;
+    width: 600px;
+}
+
+@media screen and (max-width: 700px) {
+    .Card {
+        width: 400px;
+    }
 }
 
 .Card-checked {
