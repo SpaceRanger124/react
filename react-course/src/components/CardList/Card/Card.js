@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
 import CardHeader from './CardHeader/CardHeader';
+import withLoadingDelay from '../../../hoc/WithLoadingDelay';
 
 class Card extends Component {
 	state = {
@@ -84,4 +85,4 @@ class Card extends Component {
     }
 }
 
-export default Card;
+export default withLoadingDelay(Card);
