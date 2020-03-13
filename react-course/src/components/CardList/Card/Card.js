@@ -90,11 +90,11 @@ class Card extends Component {
 }
 
 Card.propTypes = {
-    className: PropTypes.string,
-    caption: PropTypes.string,
-    description: PropTypes.string,
-    readOnly: PropTypes.bool,
-    id: PropTypes.string
+    className: PropTypes.string.isRequired,
+    caption: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    readOnly: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired
 };
 
 export default withLoadingDelay(Card);

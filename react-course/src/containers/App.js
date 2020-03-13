@@ -10,16 +10,6 @@ import CardsContext from '../context/cards-context';
 class App extends Component {
 	
 	state = {
-		cards: [
-			{id: uuidv1(), caption: "Mercury", description: "This is the first planet from the Sun.", isSelected: false },
-			{id: uuidv1(), caption: "Venus", description: "This is the second planet from the Sun.", isSelected: false },
-			{id: uuidv1(), caption: "Earth", description: "This is the third planet from the Sun.", isSelected: false },
-			{id: uuidv1(), caption: "Mars", description: "This is the fourth planet from the Sun.", isSelected: false },
-			{id: uuidv1(), caption: "Jupiter", description: "This is the fifth planet from the Sun.", isSelected: false },
-			{id: uuidv1(), caption: "Saturn", description: "This is the sixth planet from the Sun.", isSelected: false },
-			{id: uuidv1(), caption: "Uranus", description: "This is the seventh planet from the Sun.", isSelected: false },
-			{id: uuidv1(), caption: "Neptune", description: "This is the eighth planet from the Sun.", isSelected: false }
-		],
 		readOnly: false,
 		isAddCardPanelVisible: false
 	};
@@ -33,36 +23,31 @@ class App extends Component {
 	}
 
 	selectCardHandler = cardId => () => {
-	    this.setState({
-            cards: this.state.cards.map(card => {
-                if (card.id === cardId) {
-                    card.isSelected = !card.isSelected;
-                }
-                return card;
-            })
+	    this.context.cards = this.context.cards.map(card => {
+            if (card.id === cardId) {
+                card.isSelected = !card.isSelected;
+            }
+            return card;
         });
 	}
 
 	updateCardHandler = cardId => (newCaption, newDescription) => {
-	    this.setState({
-	        cards: this.state.cards.map(_card => {
-	            if (_card.id !== cardId) {
-	                return _card;
-	            } else {
-	                return {
-	                    ..._card,
-	                    caption: newCaption,
-	                    description: newDescription
-	                };
-	            }
-	        })
-	    });
+	    this.context.cards = this.context.cards.map(_card => {
+            if (_card.id !== cardId) {
+                return _card;
+            } else {
+                return {
+                    ..._card,
+                    caption: newCaption,
+                    description: newDescription
+                };
+            }
+        });
 	}
 
 	removeSelectedCards = () => {
-        this.setState({
-            cards: this.state.cards.filter(card => !card.isSelected)
-        });
+	    this.context.cards = this.context.cards.filter(card => !card.isSelected);
+	    console.log(this.context.cards);
 	}
 
 	addNewCard = () => {
@@ -72,8 +57,8 @@ class App extends Component {
 	}
 
 	submitNewCard = (caption, description) => {
+	    this.context.cards = [...this.context.cards, {id: uuidv1(), caption: caption, description: description}];
 	    this.setState({
-	        cards: [...this.state.cards, {id: uuidv1(), caption: caption, description: description}],
 	        isAddCardPanelVisible: false
 	    });
 	}
@@ -85,7 +70,6 @@ class App extends Component {
     }
 
 	render() {
-	    this.context.cards = this.state.cards;
 	    this.context.selectCardHandler = this.selectCardHandler;
 	    this.context.updateCardHandler = this.updateCardHandler;
 
@@ -108,8 +92,8 @@ class App extends Component {
 		return (
 			<div className={classes.App}>
 				<header className={classes['App-header']}>
-					The Solar System
-					<div>{"\u00a0" + this.context.cards.length + "\u00a0"}</div>
+					<p>The Solar System</p>
+					<div>{this.context.cards.length}</div>
 				</header>
 				<StyledInput
                     type="checkbox"

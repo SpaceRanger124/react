@@ -26,6 +26,8 @@
     background: lightblue;
     color: grey;
     text-align: center;
+    min-width: 30px;
+    padding: 5px;
 }
 
 .App-checkbox-label {
