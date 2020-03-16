@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { v1 as uuidv1 } from 'uuid';
 
 import classes from './App.module.css';
 import CardList from '../components/CardList/CardList';
 import AddCardPanel from '../components/AddCardPanel/AddCardPanel';
-import CardsContext from '../context/cards-context';
+import {
+    Provider as CardsProvider,
+    Consumer as CardConsumer
+} from '../context/cards-context';
 
 class App extends Component {
 	
@@ -13,8 +15,6 @@ class App extends Component {
 		readOnly: false,
 		isAddCardPanelVisible: false
 	};
-
-	static contextType = CardsContext;
 	
 	switchReadOnly = () => {
 		this.setState({
@@ -22,44 +22,9 @@ class App extends Component {
 		});
 	}
 
-	selectCardHandler = cardId => () => {
-	    this.context.cards = this.context.cards.map(card => {
-            if (card.id === cardId) {
-                card.isSelected = !card.isSelected;
-            }
-            return card;
-        });
-	}
-
-	updateCardHandler = cardId => (newCaption, newDescription) => {
-	    this.context.cards = this.context.cards.map(_card => {
-            if (_card.id !== cardId) {
-                return _card;
-            } else {
-                return {
-                    ..._card,
-                    caption: newCaption,
-                    description: newDescription
-                };
-            }
-        });
-	}
-
-	removeSelectedCards = () => {
-	    this.context.cards = this.context.cards.filter(card => !card.isSelected);
-	    console.log(this.context.cards);
-	}
-
 	addNewCard = () => {
 	    this.setState({
 	        isAddCardPanelVisible: true
-	    });
-	}
-
-	submitNewCard = (caption, description) => {
-	    this.context.cards = [...this.context.cards, {id: uuidv1(), caption: caption, description: description}];
-	    this.setState({
-	        isAddCardPanelVisible: false
 	    });
 	}
 
@@ -70,9 +35,6 @@ class App extends Component {
     }
 
 	render() {
-	    this.context.selectCardHandler = this.selectCardHandler;
-	    this.context.updateCardHandler = this.updateCardHandler;
-
 		const StyledInput = styled.input`
             outline: 1px dashed purple;
             outline-offset: -1px;
@@ -80,48 +42,67 @@ class App extends Component {
             margin-top: 40px;
             margin-left: 30px;
         `;
-        let addCardPanel = null;
-        if (this.state.isAddCardPanelVisible) {
-            addCardPanel = (
-                <AddCardPanel
-                    submit={this.submitNewCard}
-                    cancel={this.cancelNewCard}
-                />
-            );
-        }
 		return (
-			<div className={classes.App}>
-				<header className={classes['App-header']}>
-					<p>The Solar System</p>
-					<div>{this.context.cards.length}</div>
-				</header>
-				<StyledInput
-                    type="checkbox"
-                    id="readOnlyCheckbox"
-					checked={this.state.readOnly}
-					onChange={this.switchReadOnly}
-                />
-				<label
-				    className={classes['App-checkbox-label']}
-				    htmlFor="readOnlyCheckbox"
-				>
-				    Read only
-				</label>
-				<div className={classes['App-button-block']}>
-				    <button onClick={this.removeSelectedCards}>
-				        Remove selected cards
-				    </button>
-				    <button onClick={this.addNewCard}>
-				        Add a new card
-				    </button>
-				</div>
-				{addCardPanel}
-				<div className={classes['App-cards']}>
-				    <CardList
-				        readOnly={this.state.readOnly}
-				    />
-				</div>
-			</div>
+		    <CardsProvider>
+                <div className={classes.App}>
+                    <CardConsumer>
+                        {context => (
+                            <header className={classes['App-header']}>
+                                <p>The Solar System</p>
+                                <div>{context.cards.length}</div>
+                            </header>
+                        )}
+                    </CardConsumer>
+                    <StyledInput
+                        type="checkbox"
+                        id="readOnlyCheckbox"
+                        checked={this.state.readOnly}
+                        onChange={this.switchReadOnly}
+                    />
+                    <label
+                        className={classes['App-checkbox-label']}
+                        htmlFor="readOnlyCheckbox"
+                    >
+                        Read only
+                    </label>
+                    <div className={classes['App-button-block']}>
+                        <CardConsumer>
+                            {context => (
+                                <button onClick={context.removeSelectedCards}>
+                                    Remove selected cards
+                                </button>
+                            )}
+                        </CardConsumer>
+                        <button onClick={this.addNewCard}>
+                            Add a new card
+                        </button>
+                    </div>
+                    {this.state.isAddCardPanelVisible ?
+                        (
+                            <CardConsumer>
+                                {context => (
+                                    <AddCardPanel
+                                        submit={context.submitNewCard}
+                                        cancel={this.cancelNewCard}
+                                    />
+                                )}
+                            </CardConsumer>
+                        ) : null
+                    }
+                    <div className={classes['App-cards']}>
+                        <CardConsumer>
+                            {context => (
+                                <CardList
+                                    readOnly={this.state.readOnly}
+                                    cards={context.cards}
+                                    selectCardHandler={context.selectCardHandler}
+                                    updateCardHandler={context.updateCardHandler}
+                                />
+                            )}
+                        </CardConsumer>
+                    </div>
+                </div>
+			</CardsProvider>
 		);
 	}
 	

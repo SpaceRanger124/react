@@ -5,7 +5,6 @@ import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
 import CardHeader from './CardHeader/CardHeader';
 import withLoadingDelay from '../../../hoc/withLoadingDelay';
-import CardsContext from '../../../context/cards-context';
 
 class Card extends Component {
 	state = {
@@ -13,14 +12,12 @@ class Card extends Component {
         isCheckboxChecked: false
     };
 
-    static contextType = CardsContext;
-
     temporaryCaption = this.props.caption;
     temporaryDescription = this.props.description;
 
     onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
-        this.context.selectCardHandler(this.props.id)();
+        this.props.selectCardHandler();
     };
 
     handleCaptionChange = (event) => {
@@ -39,7 +36,7 @@ class Card extends Component {
     }
 
     saveChanges = () => {
-        this.context.updateCardHandler(this.props.id)(
+        this.props.updateCardHandler(
             this.temporaryCaption,
             this.temporaryDescription
         );
@@ -93,8 +90,7 @@ Card.propTypes = {
     className: PropTypes.string.isRequired,
     caption: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    readOnly: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired
+    readOnly: PropTypes.bool.isRequired
 };
 
 export default withLoadingDelay(Card);
