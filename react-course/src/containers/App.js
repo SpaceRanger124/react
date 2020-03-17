@@ -12,8 +12,7 @@ import {
 class App extends Component {
 	
 	state = {
-		readOnly: false,
-		isAddCardPanelVisible: false
+		readOnly: false
 	};
 	
 	switchReadOnly = () => {
@@ -21,18 +20,6 @@ class App extends Component {
 			readOnly: !this.state.readOnly
 		});
 	}
-
-	addNewCard = () => {
-	    this.setState({
-	        isAddCardPanelVisible: true
-	    });
-	}
-
-	cancelNewCard = () => {
-	    this.setState({
-            isAddCardPanelVisible: false
-        });
-    }
 
 	render() {
 		const StyledInput = styled.input`
@@ -68,27 +55,25 @@ class App extends Component {
                     <div className={classes['App-button-block']}>
                         <CardConsumer>
                             {context => (
-                                <button onClick={context.removeSelectedCards}>
-                                    Remove selected cards
-                                </button>
+                                <div>
+                                    <button onClick={context.removeSelectedCards}>
+                                        Remove selected cards
+                                    </button>
+                                    <button onClick={context.addNewCard}>
+                                        Add a new card
+                                    </button>
+                                </div>
                             )}
                         </CardConsumer>
-                        <button onClick={this.addNewCard}>
-                            Add a new card
-                        </button>
                     </div>
-                    {this.state.isAddCardPanelVisible ?
-                        (
-                            <CardConsumer>
-                                {context => (
-                                    <AddCardPanel
-                                        submit={context.submitNewCard}
-                                        cancel={this.cancelNewCard}
-                                    />
-                                )}
-                            </CardConsumer>
-                        ) : null
-                    }
+                    <CardConsumer>
+                        {context => context.isAddCardPanelVisible ? (
+                            <AddCardPanel
+                                submit={context.submitNewCard}
+                                cancel={context.cancelNewCard}
+                            />
+                        ) : null}
+                    </CardConsumer>
                     <div className={classes['App-cards']}>
                         <CardConsumer>
                             {context => (

@@ -55,7 +55,8 @@ class CardsProvider extends Component {
                 description: "This is the eighth planet from the Sun.",
                 isSelected: false
             }
-        ]
+        ],
+        isAddCardPanelVisible: false
     };
 
     selectCardHandler = cardId => () => {
@@ -85,12 +86,26 @@ class CardsProvider extends Component {
         });
     };
 
+
+	addNewCard = () => {
+	    this.setState({
+	        isAddCardPanelVisible: true
+	    });
+	}
+
+    cancelNewCard = () => {
+        this.setState({
+            isAddCardPanelVisible: false
+        });
+    }
+
 	submitNewCard = (caption, description) => {
 	    this.setState({
 	        cards: [
                 ...this.state.cards,
                 {id: uuidv1(), caption: caption, description: description}
-            ]
+            ],
+            isAddCardPanelVisible: false
 	    });
 	}
 
@@ -107,9 +122,12 @@ class CardsProvider extends Component {
             <Provider
                 value={{
                     cards: this.state.cards,
+                    isAddCardPanelVisible: this.state.isAddCardPanelVisible,
                     selectCardHandler: this.selectCardHandler,
                     updateCardHandler: this.updateCardHandler,
+                    addNewCard: this.addNewCard,
                     submitNewCard: this.submitNewCard,
+                    cancelNewCard: this.cancelNewCard,
                     removeSelectedCards: this.removeSelectedCards
                 }}
             >
