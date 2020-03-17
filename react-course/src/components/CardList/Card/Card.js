@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
@@ -10,13 +11,13 @@ class Card extends Component {
 	    editMode: false,
         isCheckboxChecked: false
     };
-	
+
     temporaryCaption = this.props.caption;
     temporaryDescription = this.props.description;
 
     onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
-        this.props.selectHandler();
+        this.props.selectCardHandler();
     };
 
     handleCaptionChange = (event) => {
@@ -84,5 +85,12 @@ class Card extends Component {
         );
     }
 }
+
+Card.propTypes = {
+    className: PropTypes.string.isRequired,
+    caption: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    readOnly: PropTypes.bool.isRequired
+};
 
 export default withLoadingDelay(Card);
