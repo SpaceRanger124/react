@@ -4,14 +4,10 @@ import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-do
 import classes from './App.module.css';
 import Home from '../components/Home/Home';
 import SignIn from '../components/SignIn/SignIn';
-import NotFound from '../components/NotFound/NotFound';
 
 class App extends Component {
-	
-
 
 	render() {
-
 		return (
 		    <Router>
 		        <div className={classes["App-nav-block"]}>
@@ -26,7 +22,7 @@ class App extends Component {
                     <Switch>
                         <Route path="/" exact component={Home} />
                         <Route path="/signin" exact component={SignIn} />
-                        <Route path="*" component={NotFound} />
+                        <Route render={() => <h1 style={{'textAlign': 'center'}}>Not Found</h1>} />
                     </Switch>
                 </div>
 		    </Router>
