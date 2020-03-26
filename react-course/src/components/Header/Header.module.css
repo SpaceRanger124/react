@@ -1,0 +1,43 @@
+.Header {
+    padding: 20px 0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: calc(10px + 2vmin);
+    font-weight: bold;
+    color: blue;
+    border-style: solid;
+    border-width: thick;
+}
+
+.Header-cardsNumber {
+    border-radius: 20px;
+    background: lightblue;
+    color: grey;
+    text-align: center;
+    min-width: 30px;
+    padding: 5px;
+}
+
+.Header-nav-block ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.Header-nav-block li {
+    display: inline-block;
+    margin: 20px;
+}
+
+.Header-nav-block a {
+    text-decoration: none;
+    color: black;
+}
+
+.Header-nav-block a:hover {
+    color: #11923f;
+}

@@ -7,8 +7,7 @@ const { Provider, Consumer } = CardContext;
 
 class CardsProvider extends Component {
     state = {
-        cards: [],
-        isAddCardPanelVisible: false
+        cards: []
     };
 
     selectCardHandler = cardId => () => {
@@ -38,26 +37,12 @@ class CardsProvider extends Component {
         });
     };
 
-
-	addNewCard = () => {
-	    this.setState({
-	        isAddCardPanelVisible: true
-	    });
-	}
-
-    cancelNewCard = () => {
-        this.setState({
-            isAddCardPanelVisible: false
-        });
-    }
-
-	submitNewCard = (caption, description) => {
+	addCardToList = (caption, description) => {
 	    this.setState({
 	        cards: [
                 ...this.state.cards,
                 {id: uuidv1(), caption: caption, description: description}
-            ],
-            isAddCardPanelVisible: false
+            ]
 	    });
 	}
 
@@ -92,12 +77,9 @@ class CardsProvider extends Component {
             <Provider
                 value={{
                     cards: this.state.cards,
-                    isAddCardPanelVisible: this.state.isAddCardPanelVisible,
                     selectCardHandler: this.selectCardHandler,
                     updateCardHandler: this.updateCardHandler,
-                    addNewCard: this.addNewCard,
-                    submitNewCard: this.submitNewCard,
-                    cancelNewCard: this.cancelNewCard,
+                    addCardToList: this.addCardToList,
                     removeSelectedCards: this.removeSelectedCards
                 }}
             >

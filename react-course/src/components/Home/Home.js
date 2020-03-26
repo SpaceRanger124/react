@@ -4,15 +4,13 @@ import styled from 'styled-components';
 import classes from './Home.module.css';
 import CardList from '../CardList/CardList';
 import AddCardPanel from '../AddCardPanel/AddCardPanel';
-import {
-    Provider as CardsProvider,
-    Consumer as CardConsumer
-} from '../../context/cards-context';
+import { Consumer as CardConsumer } from '../../context/cards-context';
 
 class Home extends Component {
 
 	state = {
-		readOnly: false
+		readOnly: false,
+		isAddCardPanelVisible: false
 	};
 
 	switchReadOnly = () => {
@@ -20,6 +18,25 @@ class Home extends Component {
 			readOnly: !this.state.readOnly
 		});
 	}
+
+	addNewCard = () => {
+	    this.setState({
+	        isAddCardPanelVisible: true
+	    });
+	}
+
+	submitNewCard = (addCardToList) => (caption, description) => {
+	    addCardToList(caption, description);
+	    this.setState({
+	        isAddCardPanelVisible: false
+	    });
+	}
+
+    cancelNewCard = () => {
+        this.setState({
+            isAddCardPanelVisible: false
+        });
+    }
 
 	render() {
 		const StyledInput = styled.input`
@@ -30,64 +47,54 @@ class Home extends Component {
             margin-left: 30px;
         `;
 		return (
-		    <CardsProvider>
-                <div className={classes.Home}>
+            <div className={classes.Home}>
+                <StyledInput
+                    type="checkbox"
+                    id="readOnlyCheckbox"
+                    checked={this.state.readOnly}
+                    onChange={this.switchReadOnly}
+                />
+                <label
+                    className={classes['Home-checkbox-label']}
+                    htmlFor="readOnlyCheckbox"
+                >
+                    Read only
+                </label>
+                <div className={classes['Home-button-block']}>
                     <CardConsumer>
                         {context => (
-                            <header className={classes['Home-header']}>
-                                <p>The Solar System</p>
-                                <div>{context.cards.length}</div>
-                            </header>
+                            <div>
+                                <button onClick={context.removeSelectedCards}>
+                                    Remove selected cards
+                                </button>
+                                <button onClick={this.addNewCard}>
+                                    Add a new card
+                                </button>
+                            </div>
                         )}
                     </CardConsumer>
-                    <StyledInput
-                        type="checkbox"
-                        id="readOnlyCheckbox"
-                        checked={this.state.readOnly}
-                        onChange={this.switchReadOnly}
-                    />
-                    <label
-                        className={classes['Home-checkbox-label']}
-                        htmlFor="readOnlyCheckbox"
-                    >
-                        Read only
-                    </label>
-                    <div className={classes['Home-button-block']}>
-                        <CardConsumer>
-                            {context => (
-                                <div>
-                                    <button onClick={context.removeSelectedCards}>
-                                        Remove selected cards
-                                    </button>
-                                    <button onClick={context.addNewCard}>
-                                        Add a new card
-                                    </button>
-                                </div>
-                            )}
-                        </CardConsumer>
-                    </div>
-                    <CardConsumer>
-                        {context => context.isAddCardPanelVisible ? (
-                            <AddCardPanel
-                                submit={context.submitNewCard}
-                                cancel={context.cancelNewCard}
-                            />
-                        ) : null}
-                    </CardConsumer>
-                    <div className={classes['Home-cards']}>
-                        <CardConsumer>
-                            {context => (
-                                <CardList
-                                    readOnly={this.state.readOnly}
-                                    cards={context.cards}
-                                    selectCardHandler={context.selectCardHandler}
-                                    updateCardHandler={context.updateCardHandler}
-                                />
-                            )}
-                        </CardConsumer>
-                    </div>
                 </div>
-			</CardsProvider>
+                <CardConsumer>
+                    {context => this.state.isAddCardPanelVisible ? (
+                        <AddCardPanel
+                            submit={this.submitNewCard(context.addCardToList)}
+                            cancel={this.cancelNewCard}
+                        />
+                    ) : null}
+                </CardConsumer>
+                <div className={classes['Home-cards']}>
+                    <CardConsumer>
+                        {context => (
+                            <CardList
+                                readOnly={this.state.readOnly}
+                                cards={context.cards}
+                                selectCardHandler={context.selectCardHandler}
+                                updateCardHandler={context.updateCardHandler}
+                            />
+                        )}
+                    </CardConsumer>
+                </div>
+            </div>
 		);
 	}
 
