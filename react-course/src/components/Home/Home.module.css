@@ -1,0 +1,34 @@
+.Home {
+    color: black;
+    border-style: solid;
+    border-width: thick;
+    min-height: 99vh;
+}
+
+.Home-checkbox-label {
+    color: green;
+    font-size: calc(7px + 2vmin);
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.Home-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.Home-button-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.Home-button-block * {
+    margin-left: 20px;
+}
+
+.Home div {
+    margin-top: 10px;
+}

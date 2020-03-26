@@ -1,0 +1,30 @@
+.SignIn {
+    display: flex;
+    justify-content: center;
+    color: darkgreen;
+    margin: auto;
+    width: 50%;
+}
+
+.SignIn * {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.SignIn-left {
+    text-align: right;
+    margin-right: 20px;
+}
+
+.SignIn-ContentEditable {
+    background: lightblue;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.SignIn-submit {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
