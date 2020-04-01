@@ -1,18 +1,23 @@
 import React from 'react';
-import ContentEditable from 'react-contenteditable';
 import { MdEdit, MdSave, MdCancel } from 'react-icons/md';
 
 import classes from './CardHeader.module.css';
+import CustomInput from '../../../CustomInput/CustomInput';
 
 const CardHeader = (props) => {
+
+    const captionStyle = props.isCaptionValid ? null : classes['Card-header-caption-invalid'];
+    const saveButtonStyle = props.isCaptionValid ? classes['Card-icon'] : classes['Card-icon-disabled'];
+
     let saveButton = null;
     let cancelButton = null;
     let editButton = null;
+
     if (!props.readOnly) {
         saveButton = (
             <MdSave
-                className={classes['Card-icon']}
-                onClick={props.handleSaveClick}
+                className={saveButtonStyle}
+                onClick={props.isCaptionValid ? props.handleSaveClick: null}
             />
         );
         cancelButton = (
@@ -28,12 +33,15 @@ const CardHeader = (props) => {
             />
         );
     }
+
     return (
         <div className={classes['Card-header']}>
-            <ContentEditable
+            <CustomInput
+                validation={props.captionValidation}
                 disabled={props.disabled}
                 onChange={props.onChange}
-                html={props.content}
+                className={captionStyle}
+                value={props.content}
             />
             <span>
                 {!props.disabled ? (

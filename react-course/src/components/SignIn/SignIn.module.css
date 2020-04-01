@@ -16,15 +16,29 @@
     margin-right: 20px;
 }
 
-.SignIn-ContentEditable {
+.SignIn-submit {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.SignIn-submit-disabled {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    background-color: #f55a42;
+}
+
+.SignIn-CustomInput {
     background: lightblue;
     width: 200px;
     white-space: nowrap;
     overflow: hidden;
 }
 
-.SignIn-submit {
-    display: flex;
-    justify-content: center;
-    margin: auto;
+.SignIn-CustomInput-invalid {
+    background: #f55a42;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
 }

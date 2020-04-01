@@ -9,11 +9,14 @@ import withLoadingDelay from '../../../hoc/withLoadingDelay';
 class Card extends Component {
 	state = {
 	    editMode: false,
-        isCheckboxChecked: false
+        isCheckboxChecked: false,
+        caption: this.props.caption,
+        description: this.props.description,
+        isCaptionValid: true
     };
 
-    temporaryCaption = this.props.caption;
-    temporaryDescription = this.props.description;
+    previousCaption = this.props.caption;
+    previousDescription = this.props.description;
 
     onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
@@ -21,11 +24,15 @@ class Card extends Component {
     };
 
     handleCaptionChange = (event) => {
-        this.temporaryCaption = event.target.value;
+        this.setState({
+            caption: event.target.value
+        });
     }
 
     handleDescriptionChange = (event) => {
-        this.temporaryDescription = event.target.value;
+        this.setState({
+            description: event.target.value
+        });
     }
 
     editCard = () => {
@@ -37,38 +44,60 @@ class Card extends Component {
 
     saveChanges = () => {
         this.props.updateCardHandler(
-            this.temporaryCaption,
-            this.temporaryDescription
+            this.state.caption,
+            this.state.description
         );
         this.setState({
             editMode: false
         });
+        this.previousCaption = this.state.caption;
+        this.previousDescription = this.state.description;
     }
 
     cancelChanges = () => {
-        this.temporaryCaption = this.props.caption;
-        this.temporaryDescription = this.props.description;
-		this.setState({
-            editMode: false
+        this.props.updateCardHandler(
+            this.previousCaption,
+            this.previousDescription
+        );
+        this.setState({
+            caption: this.previousCaption,
+            description: this.previousDescription,
+            editMode: false,
+            isCaptionValid: true
+        });
+    }
+
+    validateCaption = (isCaptionValid) => {
+        this.setState({
+            isCaptionValid: isCaptionValid
         });
     }
 
     static getDerivedStateFromProps(props, state) {
+
         if (props.readOnly) {
+            state.caption = props.caption;
+            state.description = props.description;
+            state.isCaptionValid = true;
             state.editMode = false;
         }
         return state
     }
 
     render() {
+
         let styleClass = this.state.isCheckboxChecked ? classes['Card-checked'] : classes['Card'];
+
+        const captionValidation = { required: true, validateInput: this.validateCaption };
 
         return (
             <div className={[styleClass, this.props.className].join(' ')}>
                 <CardHeader
                     disabled={!this.state.editMode}
                     onChange={this.handleCaptionChange}
-                    content={this.props.caption}
+                    content={this.state.caption}
+                    isCaptionValid={this.state.isCaptionValid}
+                    captionValidation={captionValidation}
                     readOnly={this.props.readOnly}
                     handleSaveClick={this.saveChanges}
                     handleCancelClick={this.cancelChanges}
@@ -79,7 +108,7 @@ class Card extends Component {
                 <CardBody
                     disabled={!this.state.editMode}
                     onChange={this.handleDescriptionChange}
-                    content={this.props.description}
+                    content={this.state.description}
                 />
             </div>
         );
@@ -88,8 +117,6 @@ class Card extends Component {
 
 Card.propTypes = {
     className: PropTypes.string.isRequired,
-    caption: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     readOnly: PropTypes.bool.isRequired
 };
 

@@ -16,6 +16,15 @@
     overflow: hidden;
 }
 
+.Card-header-caption-invalid {
+    background: #f55a42;
+}
+
 .Card-icon {
     margin-right: 20px;
+}
+
+.Card-icon-disabled {
+    margin-right: 20px;
+    color: grey;
 }
