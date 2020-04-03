@@ -26,3 +26,10 @@
     white-space: nowrap;
     overflow: hidden;
 }
+
+.AddCardPanel-ContentEditable-disabled {
+    background: #f55a42;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+}
