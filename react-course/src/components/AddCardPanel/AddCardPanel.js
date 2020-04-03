@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import ContentEditable from 'react-contenteditable';
 
 import classes from './AddCardPanel.module.css';
 import CustomInput from '../CustomInput/CustomInput';
+import * as validation from '../utils/validation';
 
 class AddCardPanel extends Component {
 
     state = {
+        isInitialState: true,
         isUsernameValid: false
     };
 
@@ -14,6 +17,7 @@ class AddCardPanel extends Component {
 
     validateUsername = (isInputValid) => {
         this.setState({
+            isInitialState: false,
             isUsernameValid: isInputValid
         });
     }
@@ -31,13 +35,7 @@ class AddCardPanel extends Component {
     }
 
     render() {
-        const captionValidation = {
-            required: true,
-            validateInput: this.validateUsername
-        };
-
-        let buttonStyle = this.state.isUsernameValid ? null : classes['AddCardPanel-submit-disabled'];
-        let usernameStyle = this.state.isUsernameValid ? classes['AddCardPanel-ContentEditable'] : classes['AddCardPanel-ContentEditable-disabled'];
+        let usernameStyle = this.state.isInitialState || this.state.isUsernameValid ? classes['AddCardPanel-ContentEditable'] : classes['AddCardPanel-ContentEditable-disabled'];
 
         return (
             <div className={classes['AddCardPanel']}>
@@ -51,7 +49,6 @@ class AddCardPanel extends Component {
                     <div>
                         <button
                             onClick={this.submit}
-                            className={buttonStyle}
                             disabled={!this.state.isUsernameValid} >
                             Submit
                         </button>
@@ -59,14 +56,17 @@ class AddCardPanel extends Component {
                 </div>
                 <div>
                     <CustomInput
-                        validation={captionValidation}
+                        validation={[
+                            validation.required
+                        ]}
+                        validateInput={this.validateUsername}
                         onChange={this.handleCaptionChange}
                         value={this.caption}
                         className={usernameStyle}
                     />
-                    <CustomInput
+                    <ContentEditable
                         onChange={this.handleDescriptionChange}
-                        value={this.description}
+                        html={this.description}
                         className={classes['AddCardPanel-ContentEditable']}
                     />
                     <button onClick={this.props.cancel}>Cancel</button>

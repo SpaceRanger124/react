@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 
 import classes from './SignIn.module.css';
 import CustomInput from '../CustomInput/CustomInput';
+import * as validation from '../utils/validation';
 
 class SignIn extends Component {
 
     state= {
-        isUsernameValid: true,
-        isPasswordValid: true,
+        isInitialState: true,
+        isUsernameValid: false,
+        isPasswordValid: false,
         username: "",
         password: ""
     };
@@ -26,26 +28,14 @@ class SignIn extends Component {
 
     updateInputValue = (inputField) => (event) => {
         this.setState({
+            isInitialState: false,
             [inputField]: event.target.value
         });
     }
 
     render() {
-        const usernameValidation = {
-            required: true,
-            pattern: /\S+@\S+\.\S+/,
-            validateInput: this.validateUsername
-        };
-        const passwordValidation = {
-            required: true,
-            minLength: 8,
-            pattern: /([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*/,
-            validateInput: this.validatePassword
-        };
-
-        let buttonStyle = this.state.isUsernameValid && this.state.isPasswordValid ? classes['SignIn-submit'] : classes['SignIn-submit-disabled'];
-        let usernameStyle = this.state.isUsernameValid ? classes["SignIn-CustomInput"] : classes["SignIn-CustomInput-invalid"];
-        let passwordStyle = this.state.isPasswordValid ? classes["SignIn-CustomInput"] : classes["SignIn-CustomInput-invalid"];
+        let usernameStyle = this.state.isUsernameValid || this.state.isInitialState ? classes["SignIn-CustomInput"] : classes["SignIn-CustomInput-invalid"];
+        let passwordStyle = this.state.isPasswordValid || this.state.isInitialState ? classes["SignIn-CustomInput"] : classes["SignIn-CustomInput-invalid"];
 
         return (
             <div>
@@ -60,20 +50,33 @@ class SignIn extends Component {
                     </div>
                     <div>
                         <CustomInput
-                            validation={usernameValidation}
+                            validation={[
+                                validation.required,
+                                validation.pattern(
+                                    /\S+@\S+\.\S+/
+                                )
+                            ]}
+                            validateInput={this.validateUsername}
                             value={this.state.username}
                             onChange={this.updateInputValue("username")}
                             className={usernameStyle}
                         />
                         <CustomInput
-                            validation={passwordValidation}
+                            validation={[
+                                validation.required,
+                                validation.minLength(8),
+                                validation.pattern(
+                                    /([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*/
+                                )
+                            ]}
+                            validateInput={this.validatePassword}
                             value={this.state.password}
                             onChange={this.updateInputValue("password")}
                             className={passwordStyle}
                         />
                     </div>
                 </div>
-                <button className={buttonStyle} disabled={!this.state.isUsernameValid || !this.state.isPasswordValid}>
+                <button className={classes["SignIn-submit"]} disabled={!this.state.isUsernameValid || !this.state.isPasswordValid}>
                     Submit
                 </button>
             </div>

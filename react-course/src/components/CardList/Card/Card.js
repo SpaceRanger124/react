@@ -5,6 +5,7 @@ import classes from './Card.module.css';
 import CardBody from './CardBody/CardBody';
 import CardHeader from './CardHeader/CardHeader';
 import withLoadingDelay from '../../../hoc/withLoadingDelay';
+import * as validation from '../../utils/validation';
 
 class Card extends Component {
 	state = {
@@ -85,10 +86,7 @@ class Card extends Component {
     }
 
     render() {
-
         let styleClass = this.state.isCheckboxChecked ? classes['Card-checked'] : classes['Card'];
-
-        const captionValidation = { required: true, validateInput: this.validateCaption };
 
         return (
             <div className={[styleClass, this.props.className].join(' ')}>
@@ -97,7 +95,10 @@ class Card extends Component {
                     onChange={this.handleCaptionChange}
                     content={this.state.caption}
                     isCaptionValid={this.state.isCaptionValid}
-                    captionValidation={captionValidation}
+                    captionValidation={[
+                        validation.required
+                    ]}
+                    validateCaption={this.validateCaption}
                     readOnly={this.props.readOnly}
                     handleSaveClick={this.saveChanges}
                     handleCancelClick={this.cancelChanges}

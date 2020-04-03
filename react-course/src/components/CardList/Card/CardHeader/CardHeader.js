@@ -38,6 +38,7 @@ const CardHeader = (props) => {
         <div className={classes['Card-header']}>
             <CustomInput
                 validation={props.captionValidation}
+                validateInput={props.validateCaption}
                 disabled={props.disabled}
                 onChange={props.onChange}
                 className={captionStyle}

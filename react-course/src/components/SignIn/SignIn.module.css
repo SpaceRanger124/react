@@ -22,13 +22,6 @@
     margin: auto;
 }
 
-.SignIn-submit-disabled {
-    display: flex;
-    justify-content: center;
-    margin: auto;
-    background-color: #f55a42;
-}
-
 .SignIn-CustomInput {
     background: lightblue;
     width: 200px;

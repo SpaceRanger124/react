@@ -33,7 +33,3 @@
     white-space: nowrap;
     overflow: hidden;
 }
-
-.AddCardPanel-submit-disabled {
-    background-color: #f55a42;
-}
