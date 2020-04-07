@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import classes from './Home.module.css';
 import CardList from '../CardList/CardList';
 import AddCardPanel from '../AddCardPanel/AddCardPanel';
-import { Consumer as CardConsumer } from '../../context/cards-context';
+import * as cardsActions from '../utils/cards-actions';
 
 class Home extends Component {
 
@@ -61,38 +62,28 @@ class Home extends Component {
                     Read only
                 </label>
                 <div className={classes['Home-button-block']}>
-                    <CardConsumer>
-                        {context => (
-                            <div>
-                                <button onClick={context.removeSelectedCards}>
-                                    Remove selected cards
-                                </button>
-                                <button onClick={this.addNewCard}>
-                                    Add a new card
-                                </button>
-                            </div>
-                        )}
-                    </CardConsumer>
+                    <div>
+                        <button onClick={this.props.removeSelectedCards}>
+                            Remove selected cards
+                        </button>
+                        <button onClick={this.addNewCard}>
+                            Add a new card
+                        </button>
+                    </div>
                 </div>
-                <CardConsumer>
-                    {context => this.state.isAddCardPanelVisible ? (
-                        <AddCardPanel
-                            submit={this.submitNewCard(context.addCardToList)}
-                            cancel={this.cancelNewCard}
-                        />
-                    ) : null}
-                </CardConsumer>
+                {this.state.isAddCardPanelVisible ? (
+                    <AddCardPanel
+                        submit={this.submitNewCard(this.props.addCardToList)}
+                        cancel={this.cancelNewCard}
+                    />
+                ) : null}
                 <div className={classes['Home-cards']}>
-                    <CardConsumer>
-                        {context => (
-                            <CardList
-                                readOnly={this.state.readOnly}
-                                cards={context.cards}
-                                selectCardHandler={context.selectCardHandler}
-                                updateCardHandler={context.updateCardHandler}
-                            />
-                        )}
-                    </CardConsumer>
+                <CardList
+                    readOnly={this.state.readOnly}
+                    cards={this.props.cards}
+                    selectCardHandler={this.props.selectCardHandler}
+                    updateCardHandler={this.props.updateCardHandler}
+                />
                 </div>
             </div>
 		);
@@ -100,4 +91,16 @@ class Home extends Component {
 
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    cards: state
+})
+
+const mapDispatchToProps = dispatch => ({
+    addCardToList: (caption, description) => dispatch(cardsActions.addCardToList(caption, description)),
+    removeSelectedCards: () => dispatch(cardsActions.removeSelectedCards()),
+    selectCardHandler: cardId => () => dispatch(cardsActions.selectCardHandler(cardId)()),
+    updateCardHandler: cardId => (newCaption, newDescription) => dispatch(cardsActions.updateCardHandler(cardId)(newCaption, newDescription))
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

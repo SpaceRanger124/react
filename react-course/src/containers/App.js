@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 import Header from '../components/Header/Header';
-import {
-    Provider as CardsProvider,
-    Consumer as CardConsumer
-} from '../context/cards-context';
+import reducer from '..//reducers/cards';
+
+const store = createStore(reducer);
 
 class App extends Component {
 
 	render() {
 		return (
-		    <CardsProvider>
-		        <CardConsumer>
-		            {context => (
-		                <Header cardsNumber={context.cards.length} />
-		            )}
-		        </CardConsumer>
-		    </CardsProvider>
+		    <Provider store={store}>
+		        <Header />
+		    </Provider>
 		);
 	}
 	
