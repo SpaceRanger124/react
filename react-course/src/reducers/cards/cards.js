@@ -1,6 +1,8 @@
+import * as types from './actionTypes';
+
 const cards = (state = [], action) => {
     switch (action.type) {
-        case 'FETCH_CARDS':
+        case types.FETCH_CARDS:
             return action.rawCards.map(card => {
                 return {
                     id: card.Number,
@@ -8,11 +10,11 @@ const cards = (state = [], action) => {
                     description: card.About
                 }
             })
-        case 'REMOVE_SELECTED_CARDS':
+        case types.REMOVE_SELECTED_CARDS:
             return state.filter(
                 card => !card.isSelected
             )
-        case 'ADD_CARD_TO_LIST':
+        case types.ADD_CARD_TO_LIST:
             return [
                 ...state,
                 {
@@ -21,14 +23,14 @@ const cards = (state = [], action) => {
                     description: action.description
                 }
             ]
-        case 'SELECT_CARD_HANDLER':
+        case types.SELECT_CARD_HANDLER:
             return state.map(card => {
                 if (card.id === action.cardId) {
                     card.isSelected = !card.isSelected;
                 }
                 return card;
             })
-        case 'UPDATE_CARD_HANDLER':
+        case types.UPDATE_CARD_HANDLER:
             return state.map(_card => {
                 if (_card.id !== action.cardId) {
                     return _card;

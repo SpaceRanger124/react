@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import classes from './Card.module.css';
-import CardBody from './CardBody/CardBody';
-import CardHeader from './CardHeader/CardHeader';
-import withLoadingDelay from '../../../hoc/withLoadingDelay';
+import classes from '../Card/Card.module.css';
+import CardBody from '../Card/CardBody/CardBody';
+import CardHeader from '../Card/CardHeader/CardHeader';
 import * as validation from '../../utils/validation';
+import * as cardsActions from '../../../reducers/cards/actions';
 
-class Card extends Component {
+class SingleCard extends Component {
 	state = {
 	    editMode: false,
         isCheckboxChecked: false,
-        caption: this.props.caption,
-        description: this.props.description,
+        caption: this.props.location.state.caption,
+        description: this.props.location.state.description,
         isCaptionValid: true,
         redirect: false
     };
 
-    previousCaption = this.props.caption;
-    previousDescription = this.props.description;
+    previousCaption = this.props.location.state.caption;
+    previousDescription = this.props.location.state.description;
 
     onChecked = () => {
         this.setState({ isCheckboxChecked: !this.state.isCheckboxChecked });
-        this.props.selectCardHandler();
     };
 
     handleCaptionChange = (event) => {
@@ -45,7 +44,7 @@ class Card extends Component {
     }
 
     saveChanges = () => {
-        this.props.updateCardHandler(
+        this.props.updateCardHandler(this.props.match.params.id)(
             this.state.caption,
             this.state.description
         );
@@ -57,7 +56,7 @@ class Card extends Component {
     }
 
     cancelChanges = () => {
-        this.props.updateCardHandler(
+        this.props.updateCardHandler(this.props.match.params.id)(
             this.previousCaption,
             this.previousDescription
         );
@@ -75,37 +74,9 @@ class Card extends Component {
         });
     }
 
-    handleCardClick = () => {
-        if (this.props.readOnly || !this.state.editMode) {
-            this.setState({
-                redirect: true
-            })
-        }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-
-        if (props.readOnly) {
-            state.caption = props.caption;
-            state.description = props.description;
-            state.isCaptionValid = true;
-            state.editMode = false;
-        }
-        return state
-    }
-
     render() {
-        let styleClass = this.state.isCheckboxChecked ? classes['Card-checked'] : classes['Card'];
-
-        if (this.state.redirect) {
-            return this.props.redirectToCard;
-        }
-
         return (
-            <div
-                className={[styleClass, this.props.className].join(' ')}
-                onDoubleClick={this.handleCardClick}
-            >
+            <div className={[classes['Card'], this.props.location.state.className].join(' ')}>
                 <CardHeader
                     disabled={!this.state.editMode}
                     onChange={this.handleCaptionChange}
@@ -115,7 +86,7 @@ class Card extends Component {
                         validation.required
                     ]}
                     validateCaption={this.validateCaption}
-                    readOnly={this.props.readOnly}
+                    readOnly={this.props.location.state.readOnly}
                     handleSaveClick={this.saveChanges}
                     handleCancelClick={this.cancelChanges}
                     handleEditClick={this.editCard}
@@ -132,9 +103,8 @@ class Card extends Component {
     }
 }
 
-Card.propTypes = {
-    className: PropTypes.string.isRequired,
-    readOnly: PropTypes.bool.isRequired
-};
+const mapDispatchToProps = dispatch => ({
+    updateCardHandler: cardId => (newCaption, newDescription) => dispatch(cardsActions.updateCardHandler(cardId)(newCaption, newDescription))
+})
 
-export default withLoadingDelay(Card);
+export default connect(null, mapDispatchToProps)(SingleCard);

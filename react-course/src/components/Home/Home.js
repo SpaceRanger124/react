@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import classes from './Home.module.css';
 import CardList from '../CardList/CardList';
 import AddCardPanel from '../AddCardPanel/AddCardPanel';
-import * as cardsActions from '../utils/cards-actions';
+import * as cardsActions from '../../reducers/cards/actions';
 
 class Home extends Component {
 
