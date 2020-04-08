@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import Header from '../components/Header/Header';
-import {
-    Provider as CardsProvider,
-    Consumer as CardConsumer
-} from '../context/cards-context';
+import Main from '../components/Main/Main';
+import store from '../store';
 
 class App extends Component {
 
 	render() {
 		return (
-		    <CardsProvider>
-		        <CardConsumer>
-		            {context => (
-		                <Header cardsNumber={context.cards.length} />
-		            )}
-		        </CardConsumer>
-		    </CardsProvider>
+		    <Router>
+                <Provider store={store}>
+                    <Header />
+                    <Main />
+                </Provider>
+		    </Router>
 		);
 	}
 	
