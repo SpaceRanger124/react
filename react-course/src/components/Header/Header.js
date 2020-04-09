@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import classes from './Header.module.css';
-import { fetchCards } from '../../reducers/cards/actions';
+import { requestCards } from '../../reducers/cards/actions';
 
 class Header extends Component {
 
     componentDidMount() {
-        this.props.fetchCards();
+        this.props.requestCards();
     }
 
     render() {
@@ -36,12 +35,7 @@ const mapStateToProps = cards => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchCards: () => {
-        return axios.get('https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json')
-            .then(response =>
-                dispatch(fetchCards(response))
-            );
-    }
+    requestCards: () => dispatch(requestCards())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
