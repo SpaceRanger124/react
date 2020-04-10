@@ -11,6 +11,16 @@
     border-width: thick;
 }
 
+.Header-Welcome {
+    font-weight: normal;
+    font-style: italic;
+    position: absolute;
+    left: 100px;
+    top: 5px;
+    font-size: calc(3px + 2vmin);
+    color: #346778;
+}
+
 .Header-cardsNumber {
     border-radius: 20px;
     background: lightblue;

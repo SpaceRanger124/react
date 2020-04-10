@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import classes from './Header.module.css';
 import { requestCards } from '../../reducers/cards/actions';
+import { logOut } from '../../reducers/authorization/actions';
 
 class Header extends Component {
 
@@ -12,13 +13,21 @@ class Header extends Component {
     }
 
     render() {
+        const signInLink = <NavLink to="/signin" activeStyle={{color: '#fa923f'}}>Sign In</NavLink>;
+        const signOutButton = <button onClick={this.props.logOut}>Sign Out</button>;
+
+        const signInOut = this.props.auth.loggedIn ? signOutButton : signInLink;
+
+        const welcomeLabel = this.props.auth.loggedIn ? <p className={classes['Header-Welcome']}>Welcome, {this.props.auth.currentUser}!</p> : null;
+
         return (
             <header className={classes['Header']}>
+                {welcomeLabel}
                 <div className={classes["Header-nav-block"]}>
                     <nav>
                         <ul>
                             <li><NavLink exact to="/" activeStyle={{color: '#fa923f'}}>Home</NavLink></li>
-                            <li><NavLink to="/signin" activeStyle={{color: '#fa923f'}}>Sign In</NavLink></li>
+                            <li>{signInOut}</li>
                         </ul>
                     </nav>
                 </div>
@@ -30,12 +39,14 @@ class Header extends Component {
 
 }
 
-const mapStateToProps = cards => ({
-    cardsNumber: cards.length
+const mapStateToProps = state => ({
+    cardsNumber: state.cardsReducer.length,
+    auth: state.authorizationReducer
 })
 
 const mapDispatchToProps = dispatch => ({
-    requestCards: () => dispatch(requestCards())
+    requestCards: () => dispatch(requestCards()),
+    logOut: () => dispatch(logOut())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

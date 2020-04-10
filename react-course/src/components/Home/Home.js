@@ -92,7 +92,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-    cards: state
+    cards: state.cardsReducer
 })
 
 const mapDispatchToProps = dispatch => ({
