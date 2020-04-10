@@ -49,18 +49,22 @@ class Home extends Component {
         `;
 		return (
             <div className={classes.Home}>
-                <StyledInput
-                    type="checkbox"
-                    id="readOnlyCheckbox"
-                    checked={this.state.readOnly}
-                    onChange={this.switchReadOnly}
-                />
-                <label
-                    className={classes['Home-checkbox-label']}
-                    htmlFor="readOnlyCheckbox"
-                >
-                    Read only
-                </label>
+                {this.props.isAdmin ? null : (
+                    <React.Fragment>
+                        <StyledInput
+                            type="checkbox"
+                            id="readOnlyCheckbox"
+                            checked={this.state.readOnly}
+                            onChange={this.switchReadOnly}
+                        />
+                        <label
+                            className={classes['Home-checkbox-label']}
+                            htmlFor="readOnlyCheckbox"
+                        >
+                            Read only
+                        </label>
+                    </React.Fragment>
+                )}
                 <div className={classes['Home-button-block']}>
                     <div>
                         <button onClick={this.props.removeSelectedCards}>
@@ -92,7 +96,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-    cards: state.cardsReducer
+    cards: state.cardsReducer,
+    isAdmin: state.authorizationReducer.isAdmin
 })
 
 const mapDispatchToProps = dispatch => ({
