@@ -20,6 +20,8 @@ class Header extends Component {
 
         const welcomeLabel = this.props.auth.loggedIn ? <p className={classes['Header-Welcome']}>Welcome, {this.props.auth.currentUser}!</p> : null;
 
+        const settings = this.props.auth.isAdmin ? <li><NavLink exact to="/settings" activeStyle={{color: '#fa923f'}}>Settings</NavLink></li>: null;
+
         return (
             <header className={classes['Header']}>
                 {welcomeLabel}
@@ -27,6 +29,7 @@ class Header extends Component {
                     <nav>
                         <ul>
                             <li><NavLink exact to="/" activeStyle={{color: '#fa923f'}}>Home</NavLink></li>
+                            {settings}
                             <li>{signInOut}</li>
                         </ul>
                     </nav>
