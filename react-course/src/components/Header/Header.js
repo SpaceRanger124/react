@@ -34,8 +34,8 @@ const mapStateToProps = cards => ({
     cardsNumber: cards.length
 })
 
-const mapDispatchToProps = dispatch => ({
-    requestCards: () => dispatch(requestCards())
-})
+const mapDispatchToProps = {
+    requestCards
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
