@@ -1,10 +1,10 @@
 import * as types from './actionTypes';
 
-const initialState = JSON.parse(localStorage.getItem('authData')) == null ? {
+const initialState = JSON.parse(localStorage.getItem('authData')) || {
     loggedIn: false,
     currentUser: undefined,
     isAdmin: false
-} : JSON.parse(localStorage.getItem('authData'));
+};
 
 const authorization = (state = initialState, action) => {
     let newState;
