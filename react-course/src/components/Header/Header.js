@@ -45,11 +45,11 @@ class Header extends Component {
 const mapStateToProps = state => ({
     cardsNumber: state.cardsReducer.length,
     auth: state.authorizationReducer
-})
+});
 
-const mapDispatchToProps = dispatch => ({
-    requestCards: () => dispatch(requestCards()),
-    logOut: () => dispatch(logOut())
-})
+const mapDispatchToProps = {
+    requestCards,
+    logOut
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
