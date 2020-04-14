@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import classes from './SignIn.module.css';
 import CustomInput from '../CustomInput/CustomInput';
 import * as validation from '../utils/validation';
+import { logIn } from '../../reducers/authorization/actions';
 
 class SignIn extends Component {
 
@@ -31,6 +33,11 @@ class SignIn extends Component {
             isInitialState: false,
             [inputField]: event.target.value
         });
+    }
+
+    signIn = () => {
+        this.props.logIn(this.state.username, this.state.password);
+        this.props.history.push('/');
     }
 
     render() {
@@ -76,7 +83,11 @@ class SignIn extends Component {
                         />
                     </div>
                 </div>
-                <button className={classes["SignIn-submit"]} disabled={!this.state.isUsernameValid || !this.state.isPasswordValid}>
+                <button
+                    className={classes["SignIn-submit"]}
+                    disabled={!this.state.isUsernameValid || !this.state.isPasswordValid}
+                    onClick={this.signIn}
+                >
                     Submit
                 </button>
             </div>
@@ -84,4 +95,8 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+const mapDispatchToProps = {
+    logIn
+};
+
+export default connect(null, mapDispatchToProps)(SignIn);

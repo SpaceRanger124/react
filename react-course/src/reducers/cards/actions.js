@@ -38,3 +38,7 @@ export const updateCardHandler = cardId => (newCaption, newDescription) => ({
     newCaption,
     newDescription
 });
+
+export const switchReadOnly = () => ({
+    type: types.SWITCH_READ_ONLY
+});
