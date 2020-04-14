@@ -1,0 +1,6 @@
+.Settings-checkbox-label {
+    color: green;
+    font-size: calc(7px + 2vmin);
+    font-weight: bold;
+    margin-left: 20px;
+}

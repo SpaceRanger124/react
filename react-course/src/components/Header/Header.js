@@ -43,7 +43,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-    cardsNumber: state.cardsReducer.length,
+    cardsNumber: state.cardsReducer.cards.length,
     auth: state.authorizationReducer
 });
 
