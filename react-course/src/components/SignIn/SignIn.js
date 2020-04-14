@@ -95,8 +95,8 @@ class SignIn extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    logIn: (username, password) => dispatch(logIn(username, password))
-})
+const mapDispatchToProps = {
+    logIn
+};
 
 export default connect(null, mapDispatchToProps)(SignIn);

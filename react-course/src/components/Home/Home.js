@@ -103,7 +103,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     addCardToList: (caption, description) => dispatch(cardsActions.addCardToList(caption, description)),
     removeSelectedCards: () => dispatch(cardsActions.removeSelectedCards()),
-    selectCardHandler: cardId => () => dispatch(cardsActions.selectCardHandler(cardId)()),
+    selectCardHandler: cardId => () => dispatch(cardsActions.selectCardHandler(cardId)),
     updateCardHandler: cardId => (newCaption, newDescription) => dispatch(cardsActions.updateCardHandler(cardId)(newCaption, newDescription))
 
 })
